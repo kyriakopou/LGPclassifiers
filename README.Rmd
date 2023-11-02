@@ -1,0 +1,58 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# LGPclassifiers
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of LGPclassifiers is to classify RNAseq samples according to DLBCL cell of origin or other disease classifiers
+
+## Installation
+
+You can install the latest released version of LGPclassifiers like so:
+
+```{r, eval=FALSE}
+install.packages("LGPclassifiers",
+  repos = c("http://pm.rdcloud.bms.com:4242/bms-cg-biogit-bran/latest")
+)
+```
+
+
+## Example
+
+This is a basic example which shows you how to TODO
+
+```{r example, eval=FALSE}
+library(LGPclassifiers)
+
+# Load data
+# metadata.curated <- readRDS("/Volumes/stash/results/dev/kyriakoc/DLBCL/forManuel/meta.merged.rds")
+# rna.counts <- readRDS("/Volumes/stash/results/dev/kyriakoc/DLBCL/forManuel/rna.counts.rds")
+
+# Set reference and query datasets
+reference <- rna.counts$ROBUST
+query <- rna.counts$NDMER
+
+# Run ss normalization function to harmonize datasets
+# reference.st <- ss.normalize(reference, ref.transcripts = ref.parameters$ref.transcripts)
+reference.st <- ss.normalize(reference, id2geneName = ref.parameters$ref.transcripts)
+# query.st <- ss.normalize(query, ref.transcripts = ref.parameters$ref.transcripts)
+query.st <- ss.normalize(query, id2geneName = ref.parameters$ref.transcripts)
+
+# Run Reddy COO classifier
+subType <- ssREFERENCE(query.st, reference.st)
+```
+
