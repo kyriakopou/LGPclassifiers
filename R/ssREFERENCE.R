@@ -1,22 +1,21 @@
 #' @title Classify sample COO using Reddy algorithm
 #' @description
-#' Classify sample COO. Note this method is implicitly Z-score based and is not "single sample".
-#' It expects a "representative" distribution of COO classes for class thresholds
-#' to work as expected, but scores can be used to rank from GCB-like to ABC-like regardless.
-#' @param query vector of normalized query gene
-#' @param ref.mean vector of reference means
-#' @param ref.sd vector of reference standard deviations
+#' Classify sample COO as GCB-like to ABC-like. Note that this method uses a reference
+#' dataset and classifies each sample relative to the reference
+#' @param query matrix of normalized query gene/transcript counts for each sample
+#' @param reference.mean vector of reference means (provided in package data)
+#' @param reference.sd vector of reference standard deviations (provided in package data)
 #' @export
-ssREFERENCE <- function(query, ref.mean = ref.mean, ref.sd = ref.sd) {
+ssREFERENCE <- function(query, reference.mean = ref.mean, reference.sd = ref.sd) {
   ssREFERENCE_output <- NULL
 
-  # Get refence scaling values
-  sel.genes <- intersect(names(ref.mean), rownames(query))
-  ref.sd <- ref.sd[sel.genes]
-  ref.mean <- ref.mean[sel.genes]
+  # Get reference scaling values
+  sel.genes <- intersect(names(reference.mean), rownames(query))
+  reference.sd <- reference.sd[sel.genes]
+  reference.mean <- reference.mean[sel.genes]
 
   # Scale query dataset with respect to the reference
-  query.q <- (query[sel.genes, ] - ref.mean) / ref.sd
+  query.q <- (query[sel.genes, ] - reference.mean) / reference.sd
 
   # Run ReddyCOO classifier
   ssREFERENCE_output <- as.data.frame(reddyCOO_new(query.q))

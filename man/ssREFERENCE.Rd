@@ -4,17 +4,16 @@
 \alias{ssREFERENCE}
 \title{Classify sample COO using Reddy algorithm}
 \usage{
-ssREFERENCE(query, ref.mean = ref.mean, ref.sd = ref.sd)
+ssREFERENCE(query, reference.mean = ref.mean, reference.sd = ref.sd)
 }
 \arguments{
-\item{query}{vector of normalized query gene}
+\item{query}{matrix of normalized query gene/transcript counts for each sample}
 
-\item{ref.mean}{vector of reference means}
+\item{reference.mean}{vector of reference means (provided in package data)}
 
-\item{ref.sd}{vector of reference standard deviations}
+\item{reference.sd}{vector of reference standard deviations (provided in package data)}
 }
 \description{
-Classify sample COO. Note this method is implicitly Z-score based and is not "single sample".
-It expects a "representative" distribution of COO classes for class thresholds
-to work as expected, but scores can be used to rank from GCB-like to ABC-like regardless.
+Classify sample COO as GCB-like to ABC-like. Note that this method uses a reference
+dataset and classifies each sample relative to the reference
 }

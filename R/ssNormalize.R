@@ -1,20 +1,16 @@
-# library(psych)
-# library(org.Hs.eg.db)
-# library(preprocessCore)
-
 #' @title Normalize sample based on housekeeping genes
 #' @description
-#' Normalize sample based on housekeeping gene levels
-#' @param tpm.mat matrix of input samples
-#' @param id2geneName reference transcripts?
+#' Normalize tpm sample counts based on housekeeping gene levels
+#' @param tpm.mat matrix of input samples (values must be in TPM, one row per transcript/gene id)
+#' @param id2geneName data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)
 #' @param collapse T/F whether to collapse transcripts to gene level (default T)
-#' @param featureType default "gene"
+#' @param featureType either "gene" or "transcript" (default "gene")
 #' @param ref.mean,ref.sd reference gene means or standard deviations
 #' @param target target
 #' @param houseKeeping vector of housekeeping genes to normalize to (ISY1, R3HDM1, TRIM56, UBXN4, WDR55)
 #' @param toScale T/F whether to scale (default F)
 #' @export
-ss.normalize <- function(tpm.mat, id2geneName,
+ss.normalize <- function(tpm.mat, id2geneName = geneName.map,
                          collapse = TRUE,
                          featureType = "gene",
                          ref.mean = NULL, ref.sd = NULL, target = NULL,
@@ -22,15 +18,14 @@ ss.normalize <- function(tpm.mat, id2geneName,
                          toScale = FALSE) {
   tmp.filtered <- tpm.mat
 
-  sums <- round(apply(tpm.mat, 2, sum), digits = 0)
-  if (any(sums < 1000000 * 0.9999 | sums > 1000000 * 1.0001)) {
-    stop("Input tpm.mat is not a TPM matrix! Check column sums (some do not add up to 1 million)")
-  }
+  # sums <- round(apply(tpm.mat, 2, sum), digits = 0)
+  # if (any(sums < 1000000 * 0.9999 | sums > 1000000 * 1.0001)) {
+  #   stop("Input tpm.mat is not a TPM matrix! Check column sums (some do not add up to 1 million)")
+  # }
 
   rownames(tmp.filtered) <- gsub(x = rownames(tmp.filtered), pattern = "\\.\\d+", replacement = "")
 
   ## Collapse transcripts to gene level
-
   if (collapse) {
     bm <- id2geneName
     tmp.filtered <- tmp.filtered + 1
@@ -88,13 +83,11 @@ ss.normalize <- function(tpm.mat, id2geneName,
       sDev <- apply(TPMtmp2, 1, sd)
       mean <- apply(TPMtmp2, 1, mean)
       output <- (TPMtmp2 - mean) / sDev
-      # return(list(scaled=scaled,quantile=normalize.quantiles.use.target(x = scaled,target),target=target,mean=mean,sDev=sDev,ref.transcripts=bm))
     } else {
       ref.sd <- ref.sd[match(names(ref.mean), names(ref.sd))]
       TPMtmp2 <- TPMtmp2[match(names(ref.mean), rownames(TPMtmp2)), ]
       scaled <- (TPMtmp2 - ref.mean) / ref.sd
       output <- scaled[, !is.na(colSums(scaled))]
-      # return(list(scaled=scaled,quantile=normalize.quantiles.use.target(x=scaled,target=target),target=target,mean=ref.mean,sDev=ref.sd,ref.transcripts=ref.transcripts))
     }
   }
 

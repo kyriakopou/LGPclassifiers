@@ -6,7 +6,7 @@
 \usage{
 ss.normalize(
   tpm.mat,
-  id2geneName,
+  id2geneName = geneName.map,
   collapse = TRUE,
   featureType = "gene",
   ref.mean = NULL,
@@ -17,13 +17,13 @@ ss.normalize(
 )
 }
 \arguments{
-\item{tpm.mat}{matrix of input samples}
+\item{tpm.mat}{matrix of input samples (values must be in TPM, one row per transcript/gene id)}
 
-\item{id2geneName}{reference transcripts?}
+\item{id2geneName}{data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)}
 
 \item{collapse}{T/F whether to collapse transcripts to gene level (default T)}
 
-\item{featureType}{default "gene"}
+\item{featureType}{either "gene" or "transcript" (default "gene")}
 
 \item{ref.mean, ref.sd}{reference gene means or standard deviations}
 
@@ -34,5 +34,5 @@ ss.normalize(
 \item{toScale}{T/F whether to scale (default F)}
 }
 \description{
-Normalize sample based on housekeeping gene levels
+Normalize tpm sample counts based on housekeeping gene levels
 }
