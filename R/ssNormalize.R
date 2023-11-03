@@ -14,19 +14,21 @@ ss.normalize <- function(tpm.mat,id2geneName, collapse = TRUE, featureType = "ge
                          houseKeeping=c("ISY1","R3HDM1","TRIM56","UBXN4","WDR55"),
                          toScale = FALSE) {
   
-  sums = round(apply(tpm.mat,2,sum),digits=0)
-  if(any(sums < 1000000*0.9999 | sums > 1000000*1.0001)) {
-    stop('Input tpm.mat is not a TPM matrix! Check column sums (some do not add up to 1 million)')
-  }
-  
   tmp.filtered <- tpm.mat
-  rownames(tmp.filtered) <- gsub(x=rownames(tmp.filtered),pattern = '\\.\\d+',replacement = '')
   
   ## Collapse transcripts to gene level
-  
   if (collapse) {
+    
+    sums = round(apply(tpm.mat,2,sum),digits=0)
+    if(any(sums < 1000000*0.9999 | sums > 1000000*1.0001)) {
+      stop('Input tpm.mat is not a TPM matrix! Check column sums (some do not add up to 1 million)')
+    }
+    
+    rownames(tmp.filtered) <- gsub(x=rownames(tmp.filtered),pattern = '\\.\\d+',replacement = '')
+    
     bm <- id2geneName
     tmp.filtered <- tmp.filtered+1;
+    
     if (featureType=="gene") {
       bm <- bm[bm$gene_id %in% rownames(tmp.filtered),]
       tmp.filtered <- subset(x=tmp.filtered,subset=rownames(tmp.filtered) %in% bm$gene_id)
