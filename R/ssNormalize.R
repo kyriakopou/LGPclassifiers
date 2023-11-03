@@ -10,7 +10,7 @@
 #' @param houseKeeping vector of housekeeping genes to normalize to (ISY1, R3HDM1, TRIM56, UBXN4, WDR55)
 #' @param toScale T/F whether to scale (default F)
 #' @export
-ss.normalize <- function(tpm.mat,id2geneName, collapse = TRUE, featureType = "gene",ref.mean=NULL,ref.sd=NULL,target=NULL,
+ss.normalize <- function(tpm.mat,id2geneName = NULL, collapse = TRUE, featureType = "gene",ref.mean=NULL,ref.sd=NULL,target=NULL,
                          houseKeeping=c("ISY1","R3HDM1","TRIM56","UBXN4","WDR55"),
                          toScale = FALSE) {
   
@@ -22,6 +22,10 @@ ss.normalize <- function(tpm.mat,id2geneName, collapse = TRUE, featureType = "ge
     sums = round(apply(tpm.mat,2,sum),digits=0)
     if(any(sums < 1000000*0.9999 | sums > 1000000*1.0001)) {
       stop('Input tpm.mat is not a TPM matrix! Check column sums (some do not add up to 1 million)')
+    }
+    
+    if(is.null(id2geneName)) {
+      stop('A data frame mapping Ensembl gene/transcript ids to gene names is required')
     }
     
     rownames(tmp.filtered) <- gsub(x=rownames(tmp.filtered),pattern = '\\.\\d+',replacement = '')
