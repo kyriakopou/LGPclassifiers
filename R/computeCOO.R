@@ -12,10 +12,13 @@
 computeCOO <- function(query, useReference = TRUE, reference = NULL,
                          id2geneName = NULL, collapse = TRUE, featureType = "gene", ...) {
   
+  if (collapse & is.null(id2geneName)) {
+    id2geneName = geneName.map
+    message("id2geneName is NULL. Using internal gene/transcript ID to gene name mapping file.")
+  }
+  
   if (useReference) {
     if (is.null(reference)) {
-      # Load stardard reference ROBUST
-      # 
       query.ss <- ss.normalize(query,
                                id2geneName = id2geneName, collapse = collapse, featureType = featureType,
                                reference.mean = ref.mean, reference.sd = ref.sd,
