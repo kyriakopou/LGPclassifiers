@@ -5,13 +5,12 @@
 #' @param id2geneName data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)
 #' @param collapse T/F whether to collapse transcripts to gene level (default T)
 #' @param featureType either "gene" or "transcript" (default "gene")
-#' @param ref.mean,ref.sd reference gene means or standard deviations
-#' @param target target
+#' @param reference.mean,reference.sd reference gene means or standard deviations
 #' @param houseKeeping vector of housekeeping genes to normalize to (ISY1, R3HDM1, TRIM56, UBXN4, WDR55)
-#' @param toScale T/F whether to scale (default F)
 #' @export
-ss.normalize <- function(tpm.mat,id2geneName = NULL, collapse = TRUE, featureType = "gene",ref.mean=NULL,ref.sd=NULL,target=NULL,
+ss.normalize <- function(tpm.mat,id2geneName = NULL, collapse = TRUE, featureType = "gene",
                          houseKeeping=c("ISY1","R3HDM1","TRIM56","UBXN4","WDR55"),
+                         reference.mean=NULL,reference.sd=NULL,
                          toScale = FALSE) {
   
   tmp.filtered <- tpm.mat
@@ -60,10 +59,8 @@ ss.normalize <- function(tpm.mat,id2geneName = NULL, collapse = TRUE, featureTyp
   TPMtmp2 <- TPMtmp2 %*% diag(1 / houseKeepingExps)
   TPMtmp2 <- log2(TPMtmp2+1)
   colnames(TPMtmp2) <- colnames(tmp.filtered)
-  output <- TPMtmp2
-  if(toScale) {
-    # Scale data by mean and sd
-    if(is.null(ref.mean) || is.null(ref.sd)) {
+  # Scale data by mean and sd
+  if(is.null(reference.mean) || is.null(reference.sd)) {
       TPMtmp2 <- TPMtmp2[,!is.na(colSums(TPMtmp2))]
       sDev <- apply(TPMtmp2,1,sd)
       mean <- apply(TPMtmp2,1,mean)
@@ -75,8 +72,6 @@ ss.normalize <- function(tpm.mat,id2geneName = NULL, collapse = TRUE, featureTyp
       scaled <- (TPMtmp2-ref.mean)/ref.sd
       output <- scaled[,!is.na(colSums(scaled))];
       # return(list(scaled=scaled,quantile=normalize.quantiles.use.target(x=scaled,target=target),target=target,mean=ref.mean,sDev=ref.sd,ref.transcripts=ref.transcripts))
-    }
   }
-  
   return (output)
 }
