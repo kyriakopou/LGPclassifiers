@@ -10,8 +10,7 @@
 #' @export
 ss.normalize <- function(tpm.mat,id2geneName = NULL, collapse = TRUE, featureType = "gene",
                          houseKeeping=c("ISY1","R3HDM1","TRIM56","UBXN4","WDR55"),
-                         reference.mean=NULL,reference.sd=NULL,
-                         toScale = FALSE) {
+                         reference.mean=NULL,reference.sd=NULL) {
   
   tmp.filtered <- tpm.mat
   
