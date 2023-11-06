@@ -1,4 +1,4 @@
-#' @title Normalize sample based on housekeeping genes
+#' @title Normalize sample based on housekeeping genes and run Reddy COO classifier
 #' @description
 #' Normalize tpm sample counts based on housekeeping gene levels
 #' @param query matrix of input samples (values must be in TPM, one row per transcript/gene id)
@@ -20,8 +20,8 @@ computeCOO <- function(query, reference = NULL,
     reference.ss <- ss.normalize(reference,
                                  id2geneName = id2geneName, collapse = collapse, featureType = featureType,
                                  ...)
-    ref.mean <- apply(reference, 1, mean)
-    ref.sd <- apply(reference, 1, sd)
+    ref.mean <- apply(reference.ss, 1, mean)
+    ref.sd <- apply(reference.ss, 1, sd)
     query.ss <- ss.normalize(query,
                              id2geneName = id2geneName, collapse = collapse, featureType = featureType,
                              reference.mean = ref.mean, reference.sd = ref.sd,
