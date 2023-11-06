@@ -6,8 +6,10 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of LGPclassifiers is to classify RNAseq samples according to
-DLBCL cell of origin or other disease classifiers
+This repo contains all the in-house implemented classifiers for the LGP project. 
+For the moment it includes Reddy Cell Origin classifier 
+(both the original implementation and a single-sample implemented version).
+
 
 ## Installation
 
