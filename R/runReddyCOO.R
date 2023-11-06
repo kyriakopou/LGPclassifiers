@@ -3,8 +3,6 @@
 #' Classify sample COO as GCB-like to ABC-like. Note that this method uses a reference
 #' dataset and classifies each sample relative to the reference
 #' @param exprs matrix of normalized exprs counts for each sample
-#' @param reference.mean vector of reference means (provided in package data)
-#' @param reference.sd vector of reference standard deviations (provided in package data)
 #' @export
 runReddyCOO <- function(exprs) {
   # calculate reddy scores
