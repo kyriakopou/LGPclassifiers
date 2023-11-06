@@ -6,8 +6,6 @@
 #' @param id2geneName data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)
 #' @param collapse T/F whether to collapse transcripts to gene level (default T)
 #' @param featureType either "gene" or "transcript" (default "gene")
-#' @param reference.mean,reference.sd reference gene means or standard deviations
-#' @param houseKeeping vector of housekeeping genes to normalize to (ISY1, R3HDM1, TRIM56, UBXN4, WDR55)
 #' @param ... Other parameters for ss.normalize
 #' @export
 computeCOO <- function(query, reference = NULL,
