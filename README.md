@@ -6,10 +6,11 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-This repo contains all the in-house implemented classifiers for the LGP project. 
-For the moment it includes Reddy Cell Origin classifier 
-(both the original implementation and a single-sample implemented version).
-
+This package contains all the in-house implemented classifiers for the
+LGP project. For the moment it includes Reddy Cell Origin classifier
+(both the original implementation published
+[here](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5659841/) and a
+single-sample implemented version).
 
 ## Installation
 
@@ -24,8 +25,10 @@ install.packages("LGPclassifiers",
 You can install the dev version:
 
 ``` r
-remotes::install_git(url = "https://biogit.pri.bms.com/KSR/LGPclassifiers.git",
-                     ref = "dev")
+remotes::install_git(
+  url = "https://biogit.pri.bms.com/KSR/LGPclassifiers.git",
+  ref = "dev"
+)
 ```
 
 ## Example
@@ -40,11 +43,18 @@ library(LGPclassifiers)
 
 # Get example query matrix
 # rna.counts <- readRDS("/stash/results/dev/kyriakoc/DLBCL/forManuel/rna.counts.rds")
-# query <- rna.counts$NDMER
+query <- rna.counts$NDMER
+# Normalize to TPMs
+query.tpm <- apply(query,2,function(x) {
+  1000000*x/sum(x, na.rm = TRUE)
+})
 
-# Run single sample normalization function based on housekeeping genes
-query.st <- ss.normalize(query)
+# Run Reddy COO classifier on reference-normalized samples
+subType <- computeCOO(query = query.tpm, useReference = T)
 
-# Run Reddy COO classifier on normalized samples
-subType <- ssREFERENCE(query.st)
+# Run Reddy COO classifier, provide a different reference
+subType2 <- computeCOO(query = query.tpm, useReference = T, reference = reference.tpm)
+
+# Run original implementation of Reddy COO classifier
+subType3 <- computeCOO(query = query.tpm, useReference = F)
 ```

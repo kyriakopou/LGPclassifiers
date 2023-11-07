@@ -1,4 +1,16 @@
-url: https://biogit.pri.bms.com/pages/KSR/LGPClassifiers/
+url: https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/
 template:
   bootstrap: 5
 
+reference:
+- title: Functions
+  contents:
+  - computeCOO
+  - runReddyCOO
+  - ss.normalize
+  - tmeClassifier
+- title: Reference datasets
+  contents:
+  - geneName.map
+  - robust.ref.mean
+  - robust.ref.sd

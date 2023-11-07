@@ -1,7 +1,6 @@
 #' @title Classify sample COO using Reddy algorithm
 #' @description
-#' Classify sample COO as GCB-like to ABC-like. Note that this method uses a reference
-#' dataset and classifies each sample relative to the reference
+#' Classify sample COO as GCB-like to ABC-like
 #' @param exprs matrix of normalized exprs counts for each sample
 #' @export
 runReddyCOO <- function(exprs) {

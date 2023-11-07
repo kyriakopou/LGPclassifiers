@@ -14,6 +14,12 @@ Classifiers for the LGP Cohort. Includes Reddy Cell of Origin single-sample clas
 Authors:
 \itemize{
   \item Manuel Ugidos Guerrero \email{Manuel.UgidosGuerrero@bms.com}
+  \item Matt Stokes \email{Matt.Stokes@bms.com}
+}
+
+Other contributors:
+\itemize{
+  \item Charalampos Kyriakopoulos \email{Charalampos.Kyriakopoulos@bms.com} [contributor]
 }
 
 }

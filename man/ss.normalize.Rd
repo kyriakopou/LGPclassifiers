@@ -6,14 +6,12 @@
 \usage{
 ss.normalize(
   tpm.mat,
-  id2geneName = geneName.map,
+  id2geneName = NULL,
   collapse = TRUE,
   featureType = "gene",
-  ref.mean = NULL,
-  ref.sd = NULL,
-  target = NULL,
   houseKeeping = c("ISY1", "R3HDM1", "TRIM56", "UBXN4", "WDR55"),
-  toScale = FALSE
+  ref.mean = NULL,
+  ref.sd = NULL
 )
 }
 \arguments{
@@ -25,13 +23,9 @@ ss.normalize(
 
 \item{featureType}{either "gene" or "transcript" (default "gene")}
 
-\item{ref.mean, ref.sd}{reference gene means or standard deviations}
-
-\item{target}{target}
-
 \item{houseKeeping}{vector of housekeeping genes to normalize to (ISY1, R3HDM1, TRIM56, UBXN4, WDR55)}
 
-\item{toScale}{T/F whether to scale (default F)}
+\item{ref.mean, ref.sd}{reference gene means or standard deviations}
 }
 \description{
 Normalize tpm sample counts based on housekeeping gene levels

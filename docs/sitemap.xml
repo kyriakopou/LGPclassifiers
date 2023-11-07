@@ -1,33 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://biogit.pri.bms.com/pages/KSR/LGPClassifiers/404.html</loc>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/404.html</loc>
   </url>
   <url>
-    <loc>https://biogit.pri.bms.com/pages/KSR/LGPClassifiers/LICENSE-text.html</loc>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://biogit.pri.bms.com/pages/KSR/LGPClassifiers/LICENSE.html</loc>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://biogit.pri.bms.com/pages/KSR/LGPClassifiers/authors.html</loc>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/authors.html</loc>
   </url>
   <url>
-    <loc>https://biogit.pri.bms.com/pages/KSR/LGPClassifiers/index.html</loc>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/index.html</loc>
   </url>
   <url>
-    <loc>https://biogit.pri.bms.com/pages/KSR/LGPClassifiers/news/index.html</loc>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/news/index.html</loc>
   </url>
   <url>
-    <loc>https://biogit.pri.bms.com/pages/KSR/LGPClassifiers/reference/LGPclassifiers-package.html</loc>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/reference/LGPclassifiers-package.html</loc>
   </url>
   <url>
-    <loc>https://biogit.pri.bms.com/pages/KSR/LGPClassifiers/reference/index.html</loc>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/reference/computeCOO.html</loc>
   </url>
   <url>
-    <loc>https://biogit.pri.bms.com/pages/KSR/LGPClassifiers/reference/ss.normalize.html</loc>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/reference/geneName.map.html</loc>
   </url>
   <url>
-    <loc>https://biogit.pri.bms.com/pages/KSR/LGPClassifiers/reference/ssREFERENCE.html</loc>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/reference/robust.ref.mean.html</loc>
+  </url>
+  <url>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/reference/robust.ref.sd.html</loc>
+  </url>
+  <url>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/reference/runReddyCOO.html</loc>
+  </url>
+  <url>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/reference/ss.normalize.html</loc>
+  </url>
+  <url>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/reference/ssREFERENCE.html</loc>
+  </url>
+  <url>
+    <loc>https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/reference/tmeClassifier.html</loc>
   </url>
 </urlset>

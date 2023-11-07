@@ -12,6 +12,16 @@ Authors@R:
            family = "Ugidos Guerrero",
            role = c("aut"),
            email = "Manuel.UgidosGuerrero@bms.com"
+    ),
+    person(given = "Matt",
+           family = "Stokes",
+           role = c("aut"),
+           email = "Matt.Stokes@bms.com"
+    ),
+    person(given = "Charalampos",
+           family = "Kyriakopoulos",
+           role = c("ctb"),
+           email = "Charalampos.Kyriakopoulos@bms.com"
     )
   )
 Description: Classifiers for the LGP Cohort. Includes Reddy Cell of Origin single-sample classifier.
@@ -23,3 +33,4 @@ Depends:
     R (>= 2.10)
 Imports: 
     stats
+LazyData: true

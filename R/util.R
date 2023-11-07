@@ -1,10 +1,10 @@
 #' Helper function to calculate gene mean
 #' @noRd
-gene.mean <- function(X,tmp.filtered,bm, featureType) {
+gene.mean <- function(X, tmp.filtered, bm, featureType) {
   if (featureType == "gene") {
-    apply(tmp.filtered[rownames(tmp.filtered) %in% bm$gene_id[bm$gene_name %in% c(X)],,drop = FALSE],2,mean,na.rm=T)
+    apply(tmp.filtered[rownames(tmp.filtered) %in% bm$gene_id[bm$gene_name %in% c(X)], , drop = FALSE], 2, mean, na.rm = T)
   } else {
-    apply(tmp.filtered[rownames(tmp.filtered) %in% bm$transcript_id[bm$gene_name %in% c(X)],,drop = FALSE],2,mean,na.rm=T)
+    apply(tmp.filtered[rownames(tmp.filtered) %in% bm$transcript_id[bm$gene_name %in% c(X)], , drop = FALSE], 2, mean, na.rm = T)
   }
 }
 
