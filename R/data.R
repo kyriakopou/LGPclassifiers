@@ -8,16 +8,20 @@
 #' }
 "geneName.map"
 
-#' ROBUST reference distribution means:
+#' ROBUST reference distribution means
 #'
 #' The means of the ROBUST reference RNAseq dataset
 #'
 #' @format A named vector of 20 reference gene means
 "robust.ref.mean"
 
-#' ROBUST reference distribution standard deviations:
+#' ROBUST reference distribution standard deviations
 #'
 #' The standard deviations of the ROBUST reference RNAseq dataset
 #'
 #' @format A named vector of 20 reference gene means
 "robust.ref.sd"
+
+#' TME26 model coefficients
+#' @format A named vector of 26 coefficients, including the intercept
+"modelM3.coefficients"

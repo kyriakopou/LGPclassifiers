@@ -14,3 +14,4 @@ reference:
   - geneName.map
   - robust.ref.mean
   - robust.ref.sd
+  - modelM3.coefficients

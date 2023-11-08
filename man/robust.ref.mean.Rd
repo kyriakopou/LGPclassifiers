@@ -3,7 +3,7 @@
 \docType{data}
 \name{robust.ref.mean}
 \alias{robust.ref.mean}
-\title{ROBUST reference distribution means:}
+\title{ROBUST reference distribution means}
 \format{
 A named vector of 20 reference gene means
 }

@@ -5,16 +5,10 @@
 #' @export
 #'
 tmeClassifier <- function(exprs) {
-  # Read coefficients
-  # modelM3.coefficientsTable=data.frame(read.table(paste(models_path,paste="LinearModel_M3_Coefficients.txt",sep=""),sep="\t"))
-  modelM3.coefficientsTable[, 1] <- as.character(modelM3.coefficientsTable[, 1])
-  modelM3.coefficientsTable[-1, 1] <- toupper(as.character(modelM3.coefficientsTable[-1, 1]))
-
-  # modelM3.threshold=read.table(paste(models_path,paste="LinearModel_M4_Threshold.txt",sep=""),sep="\t")
-  modelM3.threshold <- modelM3.threshold[1, 1]
-  modelM3.genes <- as.character(modelM3.coefficientsTable[-1, 1])
-  myModel <- modelM3.coefficientsTable[, 2]
-  names(myModel) <- modelM3.coefficientsTable[, 1]
+  # Get coefficients
+  myModel <- LGPclassifiers::modelM3.coefficients
+  modelM3.genes <- names(myModel)[-1]
+  modelM3.threshold <- 3.3
   intercept <- myModel[1]
 
   myModel <- myModel[which(names(myModel) %in% rownames(exprs))]
@@ -25,7 +19,8 @@ tmeClassifier <- function(exprs) {
   calls.M3 <- scores.M3 > modelM3.threshold
   data_pred <- data.frame(ID = colnames(scaledData), "RNAseq_M3_Scores" = scores.M3, "RNAseq_M3_Calls" = calls.M3)
 
-  inter <- length(intersect(modelM3.coefficientsTable[, 1], rownames(exprs)))
+  # Determine if any TME genes are missing
+  inter <- length(intersect(modelM3.genes, rownames(exprs)))
   missing <- modelM3.genes[-which(modelM3.genes %in% rownames(exprs))]
   if (inter < 25) {
     print(paste("Warning: ", 25 - inter, " of 25 TME genes missing: ", missing, sep = ""))

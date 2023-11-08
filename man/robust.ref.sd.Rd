@@ -3,7 +3,7 @@
 \docType{data}
 \name{robust.ref.sd}
 \alias{robust.ref.sd}
-\title{ROBUST reference distribution standard deviations:}
+\title{ROBUST reference distribution standard deviations}
 \format{
 A named vector of 20 reference gene means
 }
