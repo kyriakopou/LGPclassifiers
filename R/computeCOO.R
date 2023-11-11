@@ -7,9 +7,8 @@
 #' @param reference Optional matrix of reference input samples (values must be in TPM, one row per
 #' transcript/gene id). If not specified, will default to Robust reference dataset.
 #' @param id2geneName data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)
-#' @param collapse T/F whether to collapse transcripts to gene level (default T)
-#' @param featureType either "gene" or "transcript" (default "gene")
-#' @param ... Other parameters for ss.normalize
+#' @param featureType either "gene_id" or "transcript_id" or "gene.name" (no collapse function is executed) (default "gene_id")
+#' @param ... Other parameters for scaleTPM
 #' @examples
 #' \dontrun{
 #' # Classify query samples relative to reference dataset
@@ -17,43 +16,43 @@
 #' }
 #' @export
 computeCOO <- function(query, useReference = TRUE, reference = NULL,
-                       id2geneName = NULL, collapse = TRUE, featureType = "gene", ...) {
+                       id2geneName = NULL, featureType = "gene_id", ...) {
   # Message about using internal gene name map if not provided
-  if (collapse & is.null(id2geneName)) {
+  if (is.null(id2geneName)) {
     id2geneName <- LGPclassifiers::geneName.map
-    message("id2geneName is NULL. Using internal gene/transcript ID to gene name mapping file.")
+    message("id2geneName is NULL. Using internal gene/transcript ID to produce gene name TPMs.")
+  }
+
+  ## Collapse transcripts to gene level if gene_ids or transcript_ids are given
+  if (featureType %in% c("gene_id", "transcript_id")) {
+    query <- collapseToGenes(query, id2geneName, featureType = featureType)
   }
 
   # Use reference-based single sample classifier
   if (useReference) {
     if (is.null(reference)) {
-      # message("Reference dataset is missing. Using default ROBUST reference dataset.")
-      query.ss <- ss.normalize(query,
-        id2geneName = id2geneName, collapse = collapse, featureType = featureType,
+      message("Scaling TPM using ROBUST reference dataset (no reference provided).")
+      query.ss <- scaleTPM(query,
         ref.mean = LGPclassifiers::robust.ref.mean, ref.sd = LGPclassifiers::robust.ref.sd,
         ...
       )
-      return(runReddyCOO(query.ss))
     } else {
       # Normalize and use user-provided reference dataset
-      reference.ss <- ss.normalize(reference,
-        id2geneName = id2geneName, collapse = collapse, featureType = featureType,
+      message("Scaling TPM using user-provided reference dataset.")
+      reference.ss <- scaleTPM(reference,
         ...
       )
       ref.mean <- apply(reference.ss, 1, mean)
       ref.sd <- apply(reference.ss, 1, sd)
-      query.ss <- ss.normalize(query,
-        id2geneName = id2geneName, collapse = collapse, featureType = featureType,
+      query.ss <- scaleTPM(query,
         ref.mean = ref.mean, ref.sd = ref.sd,
         ...
       )
-      return(runReddyCOO(query.ss))
     }
   } else { # Original Reddy implementation
-    query.ss <- ss.normalize(query,
-      id2geneName = id2geneName, collapse = collapse, featureType = featureType,
+    query.ss <- scaleTPM(query,
       ...
     )
-    return(runReddyCOO(query.ss))
   }
+  return(runReddyCOO(query.ss))
 }
