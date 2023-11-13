@@ -25,7 +25,7 @@ rna_counts <- readRDS("../LGP_Build/derived/rna.counts.rds")
 goya.genes.tpm <- rna_counts$GOYA
 
 # execute stepwise
-goya.tpm <- collapseToGenes(goya.genes.tpm, id2geneName, featureType = "gene_id")
+goya.tpm <- collapseToGenes(goya.genes.tpm, id2geneName = LGPclassifiers::geneName.map, featureType = "gene_id")
 goya.scaled <- scaleTPM(goya.tpm, ref.mean = LGPclassifiers::robust.ref.mean, ref.sd = LGPclassifiers::robust.ref.sd)
 goya.coo <- runReddyCOO(goya.scaled)
 # run the wrapper computeCOO

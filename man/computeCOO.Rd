@@ -9,8 +9,7 @@ computeCOO(
   useReference = TRUE,
   reference = NULL,
   id2geneName = NULL,
-  collapse = TRUE,
-  featureType = "gene",
+  featureType = "gene_id",
   ...
 )
 }
@@ -24,11 +23,9 @@ transcript/gene id). If not specified, will default to Robust reference dataset.
 
 \item{id2geneName}{data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)}
 
-\item{collapse}{T/F whether to collapse transcripts to gene level (default T)}
+\item{featureType}{either "gene_id" or "transcript_id" or "gene.name" (no collapse function is executed) (default "gene_id")}
 
-\item{featureType}{either "gene" or "transcript" (default "gene")}
-
-\item{...}{Other parameters for ss.normalize}
+\item{...}{Other parameters for scaleTPM}
 }
 \description{
 Classify matrix of RNAseq sample counts by Cell Origin, either original Reddy implementation

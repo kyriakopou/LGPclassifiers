@@ -6,6 +6,8 @@ reference:
 - title: Functions
   contents:
   - computeCOO
+  - collapseToGenes
+  - scaleTPM
   - runReddyCOO
   - ss.normalize
   - tmeClassifier
