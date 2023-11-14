@@ -41,7 +41,7 @@ scaleTPM <- function(tpm.mat, # quantile = FALSE,
     ref.sd <- ref.sd[match(names(ref.mean), names(ref.sd))]
     TPMtmp2 <- TPMtmp2[match(names(ref.mean), rownames(TPMtmp2)), ]
     scaled <- (TPMtmp2 - ref.mean) / ref.sd
-    output <- scaled[, !is.na(colSums(scaled))]
+    output <- scaled[!is.na(rowSums(scaled)),]
   }
 
   return(output)
