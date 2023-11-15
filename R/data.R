@@ -12,15 +12,15 @@
 #'
 #' The means of the ROBUST reference RNAseq dataset
 #'
-#' @format A named vector of 20 reference gene means
-"robust.ref.mean"
+#' @format A named vector of 56478 reference gene means (after tpm scaling)
+"robust.mean.tpm"
 
 #' ROBUST reference distribution standard deviations
 #'
 #' The standard deviations of the ROBUST reference RNAseq dataset
 #'
-#' @format A named vector of 20 reference gene means
-"robust.ref.sd"
+#' @format A named vector of 56478 reference gene sds (after tpm scaling)
+"robust.sd.tpm"
 
 #' TME26 model coefficients
 #' @format A named vector of 26 coefficients, including the intercept

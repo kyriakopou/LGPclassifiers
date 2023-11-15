@@ -9,11 +9,10 @@ reference:
   - collapseToGenes
   - scaleTPM
   - runReddyCOO
-  - ss.normalize
   - tmeClassifier
 - title: Reference datasets
   contents:
   - geneName.map
-  - robust.ref.mean
-  - robust.ref.sd
+  - robust.mean.tpm
+  - robust.sd.tpm
   - modelM3.coefficients

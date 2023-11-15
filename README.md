@@ -52,9 +52,6 @@ query.tpm <- apply(query,2,function(x) {
 # Run Reddy COO classifier on reference-normalized samples
 subType <- computeCOO(query = query.tpm, useReference = T)
 
-# Run Reddy COO classifier, provide a different reference
-subType2 <- computeCOO(query = query.tpm, useReference = T, reference = reference.tpm)
-
 # Run original implementation of Reddy COO classifier
-subType3 <- computeCOO(query = query.tpm, useReference = F)
+subType2 <- computeCOO(query = query.tpm, useReference = F)
 ```
