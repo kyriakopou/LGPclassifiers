@@ -48,13 +48,8 @@ This is a basic example which shows you how generate Reddy COO classifications f
 ```{r example, eval=FALSE}
 library(LGPclassifiers)
 
-# Get example query matrix
-# rna.counts <- readRDS("/stash/results/dev/kyriakoc/DLBCL/forManuel/rna.counts.rds")
-query <- rna.counts$NDMER
-# Normalize to TPMs
-query.tpm <- apply(query,2,function(x) {
-  1000000*x/sum(x, na.rm = TRUE)
-})
+# Get example query matrix that must be a TPM matrix
+query.tpm
 
 # Run Reddy COO classifier on reference-normalized samples
 subType <- computeCOO(query = query.tpm, useReference = T)
