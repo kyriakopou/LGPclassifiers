@@ -43,7 +43,6 @@ normalized reference
 library(LGPclassifiers)
 
 # Get example query matrix
-# rna.counts <- readRDS("/stash/results/dev/kyriakoc/DLBCL/forManuel/rna.counts.rds")
 query <- readRDS("ensembl91-genes.salmon-tpm file from NGS360")
 # Normalize to TPMs
 query.tpm <- apply(query, 2, function(x) {
