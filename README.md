@@ -4,6 +4,7 @@
 # LGPclassifiers
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 This package contains all the in-house implemented classifiers for the
@@ -43,10 +44,10 @@ library(LGPclassifiers)
 
 # Get example query matrix
 # rna.counts <- readRDS("/stash/results/dev/kyriakoc/DLBCL/forManuel/rna.counts.rds")
-query <- rna.counts$NDMER
+query <- readRDS("ensembl91-genes.salmon-tpm file from NGS360")
 # Normalize to TPMs
-query.tpm <- apply(query,2,function(x) {
-  1000000*x/sum(x, na.rm = TRUE)
+query.tpm <- apply(query, 2, function(x) {
+  1000000 * x / sum(x, na.rm = TRUE)
 })
 
 # Run Reddy COO classifier on reference-normalized samples

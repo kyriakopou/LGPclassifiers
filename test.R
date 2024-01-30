@@ -1,5 +1,5 @@
 # locate the project dir
-path <- system("find ~/Documents -name DLBCL", intern = TRUE)
+path <- system("find ~/Documents -name LGP_Build", intern = TRUE)
 setwd(paste0(path))
 rce_path <- paste(readLines("rce_path.txt"), collapse = " ")
 data_path <- paste0(rce_path, "/raw_data/")
@@ -30,10 +30,8 @@ goya.scaled <- scaleTPM(goya.tpm, ref.mean = LGPclassifiers::robust.ref.mean, re
 goya.coo <- runReddyCOO(goya.scaled)
 # run the wrapper computeCOO
 goya.coo2 <- computeCOO(query = goya.genes.tpm, useReference = TRUE)
-table(goya.coo$Subtype)
-
-goya.coo <- goya.coo %>%
-  rename(ssREFERENCE = "Subtype", ID = "Sample")
+# all equal
+table(goya.coo$ssREFERENCE, goya.coo2$ssREFERENCE)
 
 meta_merged <- readRDS("../LGP_Build/derived/meta.merged.rds")
 meta_merged %>%
@@ -42,7 +40,6 @@ meta_merged %>%
   full_join(goya.coo, by = "ID") %>%
   select(Nanostring_COO, ssREFERENCE) %>%
   table()
-
 
 # REMODLB
 remodlb.logtpm  <- rna_counts$REMODLB
@@ -57,9 +54,10 @@ meta_merged %>%
   table()
 
 # NDMER from unscalling Andy's scaled entry
-ndmer.tpm  <- (all_cohorts$NDMER$scaled + LGPclassifiers::robust.ref.mean) * LGPclassifiers::robust.ref.sd
-ndmer.tpm <- makeRPM(ndmer.tpm)
-ndmer.coo <- computeCOO(query = ndmer.tpm, featureType = "gene")
+# This does not work
+# ndmer.tpm  <- (all_cohorts$NDMER$scaled + LGPclassifiers::robust.ref.mean) * LGPclassifiers::robust.ref.sd
+# ndmer.tpm <- makeRPM(ndmer.tpm)
+# ndmer.coo <- computeCOO(query = ndmer.tpm, featureType = "gene")
 
 meta_merged %>%
   filter(Cohort == "MER", Stage == "Baseline") %>%
@@ -180,3 +178,22 @@ meta_merged %>%
   full_join(cc122.coo, by = "ID") %>%
   select(Nanostring_COO, ssREFERENCE) %>%
   table()
+
+robust.tpm <- readRDS(paste0(data_path, "ndData/ROBUST/robustTPMs_all1098.RDS"))
+tpm.samples <- colnames(robust.tpm)
+
+robust.samples <- meta_merged %>%
+  filter(Cohort == "ROBUST") %>%
+  select(ID) %>%
+  unlist()
+
+tpm.samples[tpm.samples %in% c("X7061001", "X706.1001")]
+colnames(robust.tpm)[!colnames(robust.tpm) %in% robust.samples]
+grep("X7061001", colnames(robust.tpm))
+
+robust.manifest <- read.table(paste0(data_path, "ndData/ROBUST/robust_clinical_screening_v2.txt"), sep = "\t", header = TRUE)
+
+mer_meta <- meta_merged %>%
+  filter(Cohort == "MER" | Cohort == "nonMER")
+
+saveRDS(mer_meta, paste0(derived_path, "mer.meta.rds"))
