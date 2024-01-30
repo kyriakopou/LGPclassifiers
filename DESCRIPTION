@@ -1,6 +1,6 @@
 Package: LGPclassifiers
 Title: Classifiers for the LGP Cohort
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
   c(person(given = "Clara",
            family = "Amorosi",
@@ -20,7 +20,7 @@ Authors@R:
     ),
     person(given = "Charalampos",
            family = "Kyriakopoulos",
-           role = c("ctb"),
+           role = c("aut"),
            email = "Charalampos.Kyriakopoulos@bms.com"
     )
   )
@@ -32,5 +32,8 @@ RoxygenNote: 7.2.3
 Depends: 
     R (>= 2.10)
 Imports: 
-    stats
+    dplyr,
+    magrittr,
+    stats,
+    tibble
 LazyData: true

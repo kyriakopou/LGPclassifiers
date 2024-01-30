@@ -5,7 +5,7 @@
 #' @param ref.mean,ref.sd reference gene means or standard deviations
 #' @param houseKeeping vector of housekeeping genes to normalize to (ISY1, R3HDM1, TRIM56, UBXN4, WDR55)
 #' @export
-scaleTPM <- function(tpm.mat, quantile = FALSE,
+scaleTPM <- function(tpm.mat, # quantile = FALSE,
                      houseKeeping = c("ISY1", "R3HDM1", "TRIM56", "UBXN4", "WDR55"),
                      ref.mean = NULL, ref.sd = NULL) {
 
@@ -41,7 +41,7 @@ scaleTPM <- function(tpm.mat, quantile = FALSE,
     ref.sd <- ref.sd[match(names(ref.mean), names(ref.sd))]
     TPMtmp2 <- TPMtmp2[match(names(ref.mean), rownames(TPMtmp2)), ]
     scaled <- (TPMtmp2 - ref.mean) / ref.sd
-    output <- scaled[, !is.na(colSums(scaled))]
+    output <- scaled[!is.na(rowSums(scaled)),]
   }
 
   return(output)

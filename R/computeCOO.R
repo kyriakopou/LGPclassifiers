@@ -33,7 +33,7 @@ computeCOO <- function(query, useReference = TRUE, reference = NULL,
     if (is.null(reference)) {
       message("Scaling TPM using ROBUST reference dataset (no reference provided).")
       query.ss <- scaleTPM(query,
-        ref.mean = LGPclassifiers::robust.ref.mean, ref.sd = LGPclassifiers::robust.ref.sd,
+        ref.mean = LGPclassifiers::robust.mean.tpm, ref.sd = LGPclassifiers::robust.sd.tpm,
         ...
       )
     } else {
