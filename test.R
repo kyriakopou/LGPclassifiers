@@ -17,13 +17,13 @@ makeRPM <- function(query) {
     1000000 * x / sum(x, na.rm = TRUE)
   })
 }
-id2geneName <- readRDS("/stash/results/dev/ugidosgm/DLBCL/id2geneName.rds")
-id2geneName <- id2geneName[order(id2geneName$gene_id), ]
 
-# GET THE SAME RESULTS USING THE PKG
 rna_counts <- readRDS("../LGP_Build/derived/rna.counts.rds")
-goya.genes.tpm <- rna_counts$GOYA
+meta_merged <- readRDS("../LGP_Build/derived/meta.merged.rds") %>%
+  select(-matches("RNAseq_M3"))
+id2geneName <- LGPclassifiers::geneName.map
 
+goya.genes.tpm <- rna_counts$GOYA
 # execute stepwise
 goya.tpm <- collapseToGenes(goya.genes.tpm, id2geneName = LGPclassifiers::geneName.map, featureType = "gene_id")
 goya.scaled <- scaleTPM(goya.tpm, ref.mean = LGPclassifiers::robust.ref.mean, ref.sd = LGPclassifiers::robust.ref.sd)
@@ -33,7 +33,6 @@ goya.coo2 <- computeCOO(query = goya.genes.tpm, useReference = TRUE)
 # all equal
 table(goya.coo$ssREFERENCE, goya.coo2$ssREFERENCE)
 
-meta_merged <- readRDS("../LGP_Build/derived/meta.merged.rds")
 meta_merged %>%
   filter(Cohort == "GOYA") %>%
   select(ID, Nanostring_COO) %>%
@@ -53,19 +52,6 @@ meta_merged %>%
   select(Nanostring_COO, ssREFERENCE) %>%
   table()
 
-# NDMER from unscalling Andy's scaled entry
-# This does not work
-# ndmer.tpm  <- (all_cohorts$NDMER$scaled + LGPclassifiers::robust.ref.mean) * LGPclassifiers::robust.ref.sd
-# ndmer.tpm <- makeRPM(ndmer.tpm)
-# ndmer.coo <- computeCOO(query = ndmer.tpm, featureType = "gene")
-
-meta_merged %>%
-  filter(Cohort == "MER", Stage == "Baseline") %>%
-  select(ID, Nanostring_COO) %>%
-  full_join(ndmer.coo, by = "ID") %>%
-  select(Nanostring_COO, ssREFERENCE) %>%
-  table()
-
 # NDMER from doing TPM in gene counts
 ndmer.counts  <- rna_counts$NDMER
 # Perform TPM normalization
@@ -74,12 +60,12 @@ dge.tpm <- edgeR::calcNormFactors(dge, method = "TMM")
 ndmer.tpm <- edgeR::cpm(dge.tpm)
 ndmer.tpm <- makeRPM(ndmer.tpm)
 ndmer.coo <- computeCOO(query = ndmer.tpm, featureType = "gene_id")
-table(ndmer.coo$ssREFERENCE)
+ndmer.tme <- computeTME(ndmer.tpm)
 
 meta_merged %>%
   filter(Cohort == "MER", Stage == "Baseline") %>%
-  full_join(ndmer.coo, by = "ID") %>%
-  select(Nanostring_COO, ssREFERENCE) %>%
+  full_join(ndmer.tme, by = "ID") %>%
+  select(mergeM3TMEcall, RNAseq_M3_Calls) %>%
   table()
 
 # rrmer from doing TPM in gene counts
