@@ -8,6 +8,12 @@ Authors@R:
            email = "Clara.Amorosi@bms.com",
            comment = c(ORCID = "0000-0002-0730-2576")
     ),
+    person(given = "Mandeep",
+           family = "Takhar",
+           role = c("aut"),
+           email = "Mandeep.Takhar@bms.com",
+           comment = c(ORCID = "0009-0002-6513-5080")
+    ),
     person(given = "Manuel",
            family = "Ugidos Guerrero",
            role = c("aut"),
