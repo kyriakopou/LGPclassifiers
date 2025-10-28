@@ -41,7 +41,7 @@ normalized reference
 ``` r
 library(LGPclassifiers)
 
-# Read example query TPM matrix (colSums ~ 10^6)
+# Read query TPM matrix (colSums ~ 10^6)
 # All three input formats ENSGs, ENSTs & Hugo names are acceptable
 query.tpm <- readRDS("ensembl91-genes.salmon-tpm file from NGS360")
 
