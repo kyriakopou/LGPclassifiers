@@ -19,9 +19,14 @@ rna.pctRanks <- readRDS("/home/kyriakoc/Documents/code/LGP_Build/build/rna.pctRa
 rna.tpm.hugo <- lapply(rna.tpm, function(x) {
   collapseToGenes(x)
 })
+
 coo.reddy <- lapply(seq_along(rna.tpm), function(i) {
   print(names(rna.tpm)[i])
   computeCOO(query = rna.tpm[[i]], useReference = FALSE)
+})
+coo.reddy.2 <- lapply(seq_along(rna.tpm.hugo), function(i) {
+  print(names(rna.tpm.hugo)[i])
+  computeCOO(query = rna.tpm.hugo[[i]], useReference = FALSE)
 })
 coo.reddy <- purrr::reduce(coo.reddy, dplyr::full_join) %>%
   dplyr::rename(reddy = ssREFERENCE, reddy_score = ssREFERENCE_score) %>%
@@ -29,8 +34,8 @@ coo.reddy <- purrr::reduce(coo.reddy, dplyr::full_join) %>%
   dplyr::rename(ID_Cohort = ID)
 
 coo.ssREFERENCE <- lapply(seq_along(rna.tpm), function(i) {
-  print(names(rna.tpm)[i])
-  computeCOO(query = rna.tpm[[i]])
+  print(names(rna.tpm.hugo)[i])
+  computeCOO(query = rna.tpm.hugo[[i]])
 })
 coo.ssREFERENCE <- purrr::reduce(coo.ssREFERENCE, dplyr::full_join) %>%
   mutate(ssREFERENCE = ordered(ssREFERENCE, levels = c("GCB", "Unclassified", "ABC"))) %>%

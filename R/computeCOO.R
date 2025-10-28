@@ -16,22 +16,22 @@
 #' @export
 computeCOO <- function(query, useReference = TRUE, reference = NULL,
                        id2geneName = NULL, ...) {
-  # Message about using internal gene name map if not provided
-  if (is.null(id2geneName)) {
-    id2geneName <- LGPclassifiers::geneName.map
-    message("id2geneName is NULL. Using internal gene/transcript ID to produce gene name TPMs.")
-  }
-
-  # collapse to gene-level if rownames are Ensembl gene/transcript IDs
+  # map to gene names if query rownames are Ensembl gene/transcript IDs
   firstRow <- if (!is.null(rownames(query)) && length(rownames(query)) > 0) rownames(query)[1] else ""
   if (grepl("^(ENSG|ENST)", firstRow)) {
+    # Message about using internal gene name map if not provided as arg
+    if (is.null(id2geneName)) {
+      id2geneName <- LGPclassifiers::geneName.map
+      message("id2geneName is NULL. Using internal gene/transcript ID to produce gene name TPMs.")
+    }
+
     query <- collapseToGenes(query, id2geneName)
   }
 
   # Use reference-based single sample classifier
   if (useReference) {
     if (is.null(reference)) {
-      message("Scaling TPM using ROBUST reference dataset (no reference provided).")
+      message("Scaling TPM using ROBUST as reference since no other reference was provided.")
       query.ss <- scaleTPM(query,
         ref.mean = LGPclassifiers::robust.mean.tpm, ref.sd = LGPclassifiers::robust.sd.tpm,
         ...
