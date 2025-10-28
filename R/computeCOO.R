@@ -7,7 +7,6 @@
 #' @param reference Optional matrix of reference input samples (values must be in TPM, one row per
 #' transcript/gene id). If not specified, will default to Robust reference dataset.
 #' @param id2geneName data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)
-#' @param featureType either "gene_id" or "transcript_id" or "gene.name" (no collapse function is executed) (default "gene_id")
 #' @param ... Other parameters for scaleTPM
 #' @examples
 #' \dontrun{
@@ -16,22 +15,23 @@
 #' }
 #' @export
 computeCOO <- function(query, useReference = TRUE, reference = NULL,
-                       id2geneName = NULL, featureType = "gene_id", ...) {
-  # Message about using internal gene name map if not provided
-  if (is.null(id2geneName)) {
-    id2geneName <- LGPclassifiers::geneName.map
-    message("id2geneName is NULL. Using internal gene/transcript ID to produce gene name TPMs.")
-  }
+                       id2geneName = NULL, ...) {
+  # map to gene names if query rownames are Ensembl gene/transcript IDs
+  firstRow <- if (!is.null(rownames(query)) && length(rownames(query)) > 0) rownames(query)[1] else ""
+  if (grepl("^(ENSG|ENST)", firstRow)) {
+    # Message about using internal gene name map if not provided as arg
+    if (is.null(id2geneName)) {
+      id2geneName <- LGPclassifiers::geneName.map
+      message("id2geneName is NULL. Using internal gene/transcript ID to produce gene name TPMs.")
+    }
 
-  ## Collapse transcripts to gene level if gene_ids or transcript_ids are given
-  if (featureType %in% c("gene_id", "transcript_id")) {
-    query <- collapseToGenes(query, id2geneName, featureType = featureType)
+    query <- collapseToGenes(query, id2geneName)
   }
 
   # Use reference-based single sample classifier
   if (useReference) {
     if (is.null(reference)) {
-      message("Scaling TPM using ROBUST reference dataset (no reference provided).")
+      message("Scaling TPM using ROBUST as reference since no other reference was provided.")
       query.ss <- scaleTPM(query,
         ref.mean = LGPclassifiers::robust.mean.tpm, ref.sd = LGPclassifiers::robust.sd.tpm,
         ...

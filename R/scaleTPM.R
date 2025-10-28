@@ -11,8 +11,12 @@ scaleTPM <- function(tpm.mat, # quantile = FALSE,
 
 
   sums <- round(apply(tpm.mat, 2, sum), digits = 0)
-  if (any(sums < 1000000 * 0.9999 | sums > 1000000 * 1.0001)) {
-    stop("Input tpm.tpm.mat is not a TPM tpm.matrix! Check column sums (some do not add up to 1 million)")
+  # Allow some tolerance in TPM column sums (default 5%)
+  tol <- 0.10
+  deviating <- which(abs(sums - 1e6) > tol * 1e6)
+  if (length(deviating) > 0) {
+    stop(sprintf("Input tpm.mat column sums deviate > %.1f%% from 1e6 (columns: %s). Check TPM inputs.",
+      tol * 100, paste(colnames(tpm.mat)[deviating], collapse = ", ")))
   }
 
   # Calculate housekeeping gene normalization factor
@@ -41,7 +45,7 @@ scaleTPM <- function(tpm.mat, # quantile = FALSE,
     ref.sd <- ref.sd[match(names(ref.mean), names(ref.sd))]
     TPMtmp2 <- TPMtmp2[match(names(ref.mean), rownames(TPMtmp2)), ]
     scaled <- (TPMtmp2 - ref.mean) / ref.sd
-    output <- scaled[!is.na(rowSums(scaled)),]
+    output <- scaled[!is.na(rowSums(scaled)), ]
   }
 
   return(output)

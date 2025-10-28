@@ -1,47 +1,59 @@
 #' @title Collapse transcript_ids or gene_ids to gene name level
 #' @description
 #' Collapse transcript_ids or gene_ids to gene name level
-#' @param tpm.mat matrix of input samples (values must be in TPM, one row per transcript/gene id)
-#' @param bm data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)
-#' @param featureType either "gene_id", "transcript_id" (default "gene_id")
+#' @param tpm matrix of input samples (values must be in TPM, one row per transcript/gene id)
+#' @param geneName.map data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)
 #' @importFrom dplyr .data
 #' @export
-collapseToGenes <- function(tpm.mat, bm = NULL, featureType = "gene_id") {
+collapseToGenes <- function(tpm, geneName.map = LGPclassifiers::geneName.map) {
 
-  if (is.null(bm)) {
-    stop("A data frame mapping Ensembl gene/transcript ids to gene names is required")
+  tpm <- tpm[order(rownames(tpm)), , drop = FALSE]
+
+  # if first rowname[1] contains "ENSG" or "ENST" then featureType is gene_id or transcript_id respectively
+  if (grepl("^ENSG", rownames(tpm)[1])) {
+    featureType <- "gene_id"
+  } else if (grepl("^ENST", rownames(tpm)[1])) {
+    featureType <- "transcript_id"
+  } else {
+    stop("Row names do not appear to be Ensembl gene or transcript IDs")
   }
 
-  sums <- round(apply(tpm.mat, 2, sum), digits = 0)
-  if (any(sums < 1000000 * 0.9999 | sums > 1000000 * 1.0001)) {
-    stop("Input tpm.mat is not a TPM matrix! Check column sums (some do not add up to 1 million)")
+  # Strip Ensembl version suffixes once (vectorized)
+  ids <- sub("\\.\\d+$", "", rownames(tpm))
+  # Optional cheap filter (do before mapping to cut work)
+  keep <- Matrix::rowSums(tpm) > 0  # falls back to base rowSums if Matrix not loaded
+  if (any(!keep)) {
+    tpm <- tpm[keep, , drop = FALSE]
+    ids <- ids[keep]
   }
-  rownames(tpm.mat) <- gsub(x = rownames(tpm.mat), pattern = "\\.\\d+", replacement = "")
 
-  if (!featureType %in% c("gene_id", "transcript_id")) {
-    stop('Not valid featureType ("gene_id" or "transcript_id")')
+  # Map IDs -> gene_name (vector of groups)
+  # Using an index join avoids big named vectors
+  gid <- geneName.map[, featureType]
+  gsym <- geneName.map$gene_name
+
+  # base match is fine once; cost is negligible vs dplyr pipeline
+  idx <- match(ids, gid)
+
+  mapped <- !is.na(idx)
+  if (!any(mapped)) {
+    message("Note: 0 gene/transcript IDs could be mapped to gene names")
+    return(tpm[0, , drop = FALSE])
   }
 
-  # remove unnecesary transcripts/gene_ids to speed up
-  tpm.mat <- tpm.mat[rowSums(tpm.mat) > 0, ]
+  groups <- gsym[idx[mapped]]                 # gene_name per kept row
 
-  # get the total expression of all transcripts/gene_ids for each gene
-  tpm.mat <- as.data.frame(tpm.mat) %>%
-    tibble::rownames_to_column("ID") %>%
-    tibble::as_tibble() %>%
-    dplyr::mutate(gene_name = bm[match(.data$ID, bm[, featureType]), "gene_name"]) %>%
-    dplyr::select(-.data$ID) %>%
-    dplyr::group_by(.data$gene_name) %>%
-    dplyr::summarise_all(mean, na.rm = TRUE) %>%
-    dplyr::filter(!is.na(.data$gene_name)) %>%
-    tibble::column_to_rownames("gene_name") %>%
-    as.matrix()
+  # Aggregate rows with identical gene_name in C/Fortran via rowsum()
+  # rowsum reorders groups by sort(unique(groups)) by default; preserve if desired via re-order later
+  tpm.hugo <- tpm[mapped, , drop = FALSE]
+  out <- rowsum(tpm.hugo, group = groups, reorder = TRUE)
 
-  # Normalize again to reads per million
-  tpm.mat <- apply(tpm.mat, 2, function(x) {
-    10^6 * x / sum(x, na.rm = TRUE)
-  })
+  # Reporting
+  n_unmapped <- sum(!mapped)
+  if (n_unmapped > 0) {
+    message(sprintf("Note: %d gene/transcript IDs could not be mapped to gene names", n_unmapped))
+  }
 
-  return(tpm.mat)
+  return(as.matrix(out))
+
 }
-
