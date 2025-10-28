@@ -41,7 +41,8 @@ normalized reference
 ``` r
 library(LGPclassifiers)
 
-# Get example query matrix that must be a TPM matrix
+# Read example query TPM matrix (colSums ~ 10^6)
+# All three input formats ENSGs, ENSTs & Hugo names are acceptable
 query.tpm <- readRDS("ensembl91-genes.salmon-tpm file from NGS360")
 
 # Run internal Reddy COO classifier on reference-normalized samples
