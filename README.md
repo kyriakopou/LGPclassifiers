@@ -4,7 +4,6 @@
 # LGPclassifiers
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
 This package contains all the in-house implemented classifiers for the
@@ -42,14 +41,10 @@ normalized reference
 ``` r
 library(LGPclassifiers)
 
-# Get example query matrix
-query <- readRDS("ensembl91-genes.salmon-tpm file from NGS360")
-# Normalize to TPMs
-query.tpm <- apply(query, 2, function(x) {
-  1000000 * x / sum(x, na.rm = TRUE)
-})
+# Get example query matrix that must be a TPM matrix
+query.tpm <- readRDS("ensembl91-genes.salmon-tpm file from NGS360")
 
-# Run Reddy COO classifier on reference-normalized samples
+# Run internal Reddy COO classifier on reference-normalized samples
 subType <- computeCOO(query = query.tpm, useReference = T)
 
 # Run original implementation of Reddy COO classifier
