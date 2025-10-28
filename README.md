@@ -33,10 +33,8 @@ remotes::install_git(
 
 ## Example
 
-This is a basic example which shows you how generate Reddy COO
-classifications for a matrix of samples by first normalizing sample tpm
-counts, then calculating sample COO classifications by comparing to a
-normalized reference
+Run Reddy COO classifier or the internal single-sample version using a
+reference dataset (ssREFERENCE) as follows:
 
 ``` r
 library(LGPclassifiers)
@@ -45,9 +43,9 @@ library(LGPclassifiers)
 # All three input formats ENSGs, ENSTs & Hugo names are acceptable
 query.tpm <- readRDS("ensembl91-genes.salmon-tpm file from NGS360")
 
-# Run internal Reddy COO classifier on reference-normalized samples
-subType <- computeCOO(query = query.tpm, useReference = T)
-
 # Run original implementation of Reddy COO classifier
-subType2 <- computeCOO(query = query.tpm, useReference = F)
+reddy <- computeCOO(query = query.tpm, useReference = F)
+
+# Run internal Reddy COO classifier on reference-normalized samples
+ssREFERENCE <- computeCOO(query = query.tpm, useReference = T)
 ```
