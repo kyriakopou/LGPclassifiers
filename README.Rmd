@@ -18,8 +18,8 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-This package contains all the in-house implemented classifiers for the LGP project. 
-For the moment it includes Reddy Cell Origin classifier 
+This package contains all the in-house implemented classifiers for the LGP project.
+For the moment it includes Reddy Cell Origin classifier
 (both the original implementation published [here](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5659841/) and a single-sample implemented version).
 
 ## Installation
@@ -32,7 +32,7 @@ install.packages("LGPclassifiers",
 )
 ```
 
-You can install the dev version: 
+You can install the dev version:
 
 ```{r, eval = FALSE}
 remotes::install_git(
@@ -43,22 +43,17 @@ remotes::install_git(
 
 ## Example
 
-This is a basic example which shows you how generate Reddy COO classifications for a matrix of samples by first normalizing sample tpm counts, then calculating sample COO classifications by comparing to a normalized reference  
+This is a basic example which shows you how generate Reddy COO classifications for a matrix of samples by first normalizing sample tpm counts, then calculating sample COO classifications by comparing to a normalized reference
 
 ```{r example, eval=FALSE}
 library(LGPclassifiers)
 
 # Get example query matrix that must be a TPM matrix
-query <- readRDS("ensembl91-genes.salmon-tpm file from NGS360")
-# Ensure that all columns sum to 10^6 reads
-query.tpm <- apply(query, 2, function(x) {
-  1000000 * x / sum(x, na.rm = TRUE)
-})
+query.tpm <- readRDS("ensembl91-genes.salmon-tpm file from NGS360")
 
-# Run Reddy COO classifier on reference-normalized samples
+# Run internal Reddy COO classifier on reference-normalized samples
 subType <- computeCOO(query = query.tpm, useReference = T)
 
 # Run original implementation of Reddy COO classifier
 subType2 <- computeCOO(query = query.tpm, useReference = F)
 ```
-

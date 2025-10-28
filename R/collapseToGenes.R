@@ -3,7 +3,6 @@
 #' Collapse transcript_ids or gene_ids to gene name level
 #' @param tpm matrix of input samples (values must be in TPM, one row per transcript/gene id)
 #' @param geneName.map data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)
-#' @param featureType either "gene_id", "transcript_id" (default "gene_id")
 #' @importFrom dplyr .data
 #' @export
 collapseToGenes <- function(tpm, geneName.map = LGPclassifiers::geneName.map) {
