@@ -25,8 +25,8 @@ install.packages("LGPclassifiers",
 You can install the dev version:
 
 ``` r
-remotes::install_git(
-  url = "https://biogit.pri.bms.com/KSR/LGPclassifiers.git",
+remotes::install_github(
+  url = "bms-ips/KSR-LGPclassifiers",
   ref = "dev"
 )
 ```

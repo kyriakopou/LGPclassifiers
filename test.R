@@ -3,6 +3,8 @@ library(survival)
 library(survminer)
 library(preprocessCore)
 
+remotes::install_github("bms-ips/KSR-LGPclassifiers@dev")
+
 source("/home/kyriakoc/Documents/code/originNet/src/classification.R")
 # source all scripts in R/
 r_files <- list.files(path = "../LGPclassifiers/R", pattern = "*.R", full.names = TRUE)
