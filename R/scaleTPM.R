@@ -11,7 +11,7 @@ scaleTPM <- function(tpm.mat, # quantile = FALSE,
 
 
   sums <- round(apply(tpm.mat, 2, sum), digits = 0)
-  # Allow some tolerance in TPM column sums (default 5%)
+  # Allow some tolerance in TPM column sums (default 10%)
   tol <- 0.10
   deviating <- which(abs(sums - 1e6) > tol * 1e6)
   if (length(deviating) > 0) {
@@ -19,32 +19,27 @@ scaleTPM <- function(tpm.mat, # quantile = FALSE,
       tol * 100, paste(colnames(tpm.mat)[deviating], collapse = ", ")))
   }
 
-  # Calculate housekeeping gene normalization factor
   TPMtmp2 <- as.matrix(tpm.mat)
-  houseKeepingExps <- TPMtmp2[rownames(TPMtmp2) %in% houseKeeping, ]
-  houseKeepingExps <- apply(houseKeepingExps, 2, geometric.mean)
 
-  TPMtmp2 <- TPMtmp2 %*% diag(1 / houseKeepingExps)
-  TPMtmp2 <- log2(TPMtmp2 + 1)
-  colnames(TPMtmp2) <- colnames(tpm.mat)
+  # Calculate housekeeping gene normalization factor adding eps to avoid zeros
+  gm <- function(x, eps = 0.01) exp(mean(log(pmax(x, eps))))
+  hk_means <- apply(TPMtmp2[rownames(TPMtmp2) %in% houseKeeping, ], 2, gm)
+  TPM_hk_norm <- sweep(TPMtmp2, 2, hk_means, "/")
+  TPM_hk_norm <- log2(TPM_hk_norm + 1)
+  colnames(TPM_hk_norm) <- colnames(tpm.mat)
 
-  # Maybe here an optional extra step of Quantile normalization
-  # but we would have to do the same for the reference
-  # if (quantile == TRUE) {
-  #   TPMtmp2 <- preprocessCore::normalize.quantiles(TPMtmp2)
-  # }
 
   # Scale data by self mean and sd
   if (is.null(ref.mean) || is.null(ref.sd)) {
     # TPMtmp2 <- TPMtmp2[, !is.na(colSums(TPMtmp2))]
-    sDev <- apply(TPMtmp2, 1, sd)
-    mean <- apply(TPMtmp2, 1, mean)
-    output <- (TPMtmp2 - mean) / sDev
+    sDev <- apply(TPM_hk_norm, 1, sd)
+    mean <- apply(TPM_hk_norm, 1, mean)
+    output <- (TPM_hk_norm - mean) / sDev
   } else {
     # use the reference mean and sd
     ref.sd <- ref.sd[match(names(ref.mean), names(ref.sd))]
-    TPMtmp2 <- TPMtmp2[match(names(ref.mean), rownames(TPMtmp2)), ]
-    scaled <- (TPMtmp2 - ref.mean) / ref.sd
+    TPM_hk_norm <- TPM_hk_norm[match(names(ref.mean), rownames(TPM_hk_norm)), ]
+    scaled <- (TPM_hk_norm - ref.mean) / ref.sd
     output <- scaled[!is.na(rowSums(scaled)), ]
   }
 
