@@ -17,17 +17,21 @@ single-sample implemented version).
 You can install the latest released version of LGPclassifiers like so:
 
 ``` r
-install.packages("LGPclassifiers",
-  repos = c("http://pm.rdcloud.bms.com:4242/bms-cg-biogit-bran/latest")
+my_repos <- c(
+  "CRAN" = "https://cran.rstudio.com/",
+  "BMS RSPM" = "https://pm.rdcloud.bms.com/bms-cg-biogit-bran/latest"
 )
+options(repos = my_repos)
+install.packages("LGPclassifiers")
 ```
 
 You can install the dev version:
 
 ``` r
-remotes::install_github(
-  url = "bms-ips/KSR-LGPclassifiers",
-  ref = "dev"
+remotes::install_git(
+  "git@github.com:bms-ips/KSR-LGPclassifiers.git",
+  ref = "dev",
+  git = "external"
 )
 ```
 
