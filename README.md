@@ -30,8 +30,11 @@ You can install the dev version:
 ``` r
 remotes::install_git(
   "git@github.com:bms-ips/KSR-LGPclassifiers.git",
-  ref = "dev",
-  git = "external"
+  ref = "dev",            # pin to HEAD dev
+  git = "external",
+  force = TRUE,
+  upgrade = "always",
+  build_vignettes = FALSE
 )
 ```
 
