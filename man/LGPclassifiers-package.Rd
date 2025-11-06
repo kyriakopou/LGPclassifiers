@@ -6,13 +6,14 @@
 \alias{LGPclassifiers-package}
 \title{LGPclassifiers: Classifiers for the LGP Cohort}
 \description{
-Classifiers for the LGP Cohort. Includes Reddy Cell of Origin single-sample classifier.
+This package contains several methods to classify patients in the LGP cohort based on various molecular features.
 }
 \author{
 \strong{Maintainer}: Clara Amorosi \email{Clara.Amorosi@bms.com} (\href{https://orcid.org/0000-0002-0730-2576}{ORCID})
 
 Authors:
 \itemize{
+  \item Mandeep Takhar \email{Mandeep.Takhar@bms.com} (\href{https://orcid.org/0009-0002-6513-5080}{ORCID})
   \item Manuel Ugidos Guerrero \email{Manuel.UgidosGuerrero@bms.com}
   \item Matt Stokes \email{Matt.Stokes@bms.com}
   \item Charalampos Kyriakopoulos \email{Charalampos.Kyriakopoulos@bms.com}
