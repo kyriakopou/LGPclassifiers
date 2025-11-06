@@ -7,10 +7,9 @@
 <!-- badges: end -->
 
 This package contains all the in-house implemented classifiers for the
-LGP project. For the moment it includes Reddy Cell Origin classifier
-(both the original implementation published
-[here](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5659841/) and a
-single-sample implemented version).
+LGP project. For the moment it includes [Reddy Cell of Origin
+(COO)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5659841/) and
+originNet refined Cell of Origin (rCOO) classifiers.
 
 ## Installation
 
@@ -40,8 +39,8 @@ remotes::install_git(
 
 ## Example
 
-Run Reddy COO classifier or the internal single-sample version using a
-reference dataset (ssREFERENCE) as follows:
+Run cohort-based Reddy COO or single-sample originNet rCOO classifiers
+as follows:
 
 ``` r
 library(LGPclassifiers)
@@ -53,6 +52,9 @@ query.tpm <- readRDS("ensembl91-genes.salmon-tpm file from NGS360")
 # Run original implementation of Reddy COO classifier
 reddy <- computeCOO(query = query.tpm, useReference = F)
 
-# Run internal Reddy COO classifier on reference-normalized samples
-ssREFERENCE <- computeCOO(query = query.tpm, useReference = T)
+# Run single-sample Reddy COO classifier on reference-normalized samples (OBSOLETE)
+ss.reddy <- computeCOO(query = query.tpm, useReference = T)
+
+# Run single-sample originNet classifier on reference-normalized samples
+originNet = computeOriginNet(query = query.tpm)
 ```
