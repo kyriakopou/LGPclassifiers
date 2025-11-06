@@ -30,15 +30,16 @@ Authors@R:
            email = "Charalampos.Kyriakopoulos@bms.com"
     )
   )
-Description: Classifiers for the LGP Cohort. Includes Reddy Cell of Origin single-sample classifier.
+Description: This package contains several methods to classify patients in the LGP cohort based on various molecular features. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.3
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5)
 Imports: 
     dplyr,
+    glmnet,
     magrittr,
     stats,
     tibble

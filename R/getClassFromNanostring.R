@@ -3,7 +3,6 @@
 #' COO Class from Nanostring score
 #' @param score Numeric vector of Nanostring scores
 #' @param ... Other parameters
-#' @examples
 #' @export
 getClassFromNanostring <- function(score) {
   class <- ordered(ifelse(score >= 2433.5, "ABC",

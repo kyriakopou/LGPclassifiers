@@ -3,7 +3,6 @@
 #' DZSig Class from DZSig score
 #' @param score Numeric vector of DZSig scores
 #' @param ... Other parameters
-#' @examples
 #' @export
 getClassFromDZSig <- function(score) {
 

@@ -9,7 +9,6 @@ computeCOO(
   useReference = TRUE,
   reference = NULL,
   id2geneName = NULL,
-  featureType = "gene_id",
   ...
 )
 }
@@ -22,8 +21,6 @@ computeCOO(
 transcript/gene id). If not specified, will default to Robust reference dataset.}
 
 \item{id2geneName}{data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)}
-
-\item{featureType}{either "gene_id" or "transcript_id" or "gene.name" (no collapse function is executed) (default "gene_id")}
 
 \item{...}{Other parameters for scaleTPM}
 }

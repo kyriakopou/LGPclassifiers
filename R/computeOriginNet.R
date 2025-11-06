@@ -1,6 +1,6 @@
 #' @title originNet refined COO (rCOO)
 #' @description
-#' Novel COO+DZ classification using originNet model
+#' Novel single-sample COO+DZ classification using internally designed originNet model
 #' @param query Matrix of input samples (values must be in TPM, one row per transcript/gene id)
 #' transcript/gene id). If not specified, will default to Robust reference dataset.
 #' @param ... Other parameters for computeOriginNet
@@ -9,6 +9,8 @@
 #' # Classify query samples with origiNet
 #' subType <- computeOriginNet(query = queryMatrix)
 #' }
+#' @importFrom glmnet predict.glmnet
+#' @importFrom dplyr mutate
 #' @export
 computeOriginNet <- function(query, id2geneName = NULL, ...) {
   # map to gene names if query rownames are Ensembl gene/transcript IDs
@@ -23,21 +25,24 @@ computeOriginNet <- function(query, id2geneName = NULL, ...) {
     query <- collapseToGenes(query, id2geneName)
   }
 
-  library(glmnet)
-
   # Check if input is a vector and convert to matrix if necessary
-  if (!is.matrix(rna_norm)) {
-    rna_norm <- matrix(rna_norm, ncol = 1, dimnames = list(names(rna_norm), NULL))
+  if (!is.matrix(query)) {
+    query <- matrix(query, ncol = 1, dimnames = list(names(query), NULL))
   }
 
-  # coo.model <- readRDS("../originNet/build/coo.model.rds")
-  coo.model <- LGPclassifiers::coo.model
-  X <- t(rna_norm)[, rownames(coo.model$beta), drop = FALSE]
+  # TPM ss quantile normalization wrt ROBUST mean sample (SS normalisation)
+  query.tr <- query[LGPclassifiers::lgp.com.genes, , drop = FALSE]
+  ref.mean <- LGPclassifiers::robust.mean.tpm.new[LGPclassifiers::lgp.com.genes]
+  query.quant <- log(quantileNormalizeToRef(query.tr, ref.mean) + 1)
+
+  # apply coo module
+  coo.model <- LGPclassifiers::originNet.coo.model
+  X <- t(query.quant)[, rownames(coo.model$beta), drop = FALSE]
   pred.coo <- predict(coo.model, newx = X)[, 1]
 
-  # dz.model <- readRDS("../originNet/build/dzsig.model.rds")
-  dz.model <- LGPclassifiers::dzsig.model
-  X <- t(rna_norm)[, rownames(dz.model$beta)]
+  # apply dz module
+  dz.model <- LGPclassifiers::originNet.dzsig.model
+  X <- t(query.quant)[, rownames(dz.model$beta)]
   pred.dz <- predict(dz.model, newx = X)[, 1]
 
   df <- data.frame(ID = rownames(X), originNet_score = pred.coo, originNet = getClassFromNanostring(pred.coo),
@@ -46,7 +51,7 @@ computeOriginNet <- function(query, id2geneName = NULL, ...) {
       ifelse(DZSig == "DZSig+", "DZSig+", "GCB")), levels = c("GCB", "DZSig+", "Unclassified", "ABC")))
 
   # estimate and integrate originNet confidence in the output
-  # df_conf <- getOriginNetConfidence(rna_norm, df)
+  # df_conf <- getOriginNetConfidence(query.quant, df)
   # df <- df %>%
   #   left_join(df_conf)
 

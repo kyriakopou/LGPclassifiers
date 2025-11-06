@@ -4,14 +4,12 @@
 \alias{collapseToGenes}
 \title{Collapse transcript_ids or gene_ids to gene name level}
 \usage{
-collapseToGenes(tpm.mat, bm = NULL, featureType = "gene_id")
+collapseToGenes(tpm, geneName.map = LGPclassifiers::geneName.map)
 }
 \arguments{
-\item{tpm.mat}{matrix of input samples (values must be in TPM, one row per transcript/gene id)}
+\item{tpm}{matrix of input samples (values must be in TPM, one row per transcript/gene id)}
 
-\item{bm}{data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)}
-
-\item{featureType}{either "gene_id", "transcript_id" (default "gene_id")}
+\item{geneName.map}{data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)}
 }
 \description{
 Collapse transcript_ids or gene_ids to gene name level
