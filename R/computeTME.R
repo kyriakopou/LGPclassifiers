@@ -4,7 +4,6 @@
 #' @param query Matrix of input samples (values must be in TPM, one row per transcript/gene id)
 #' transcript/gene id). If not specified, will default to Robust reference dataset.
 #' @param id2geneName data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)
-#' @param featureType either "gene_id" or "transcript_id" or "gene.name" (no collapse function is executed) (default "gene_id")
 #' @param ... Other parameters for scaleTPM
 #' @examples
 #' \dontrun{

@@ -3,7 +3,7 @@
 #' Novel single-sample COO+DZ classification using internally designed originNet model
 #' @param query Matrix of input samples (values must be in TPM, one row per transcript/gene id)
 #' transcript/gene id). If not specified, will default to Robust reference dataset.
-#' @param ... Other parameters for computeOriginNet
+#' @param id2geneName data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)
 #' @examples
 #' \dontrun{
 #' # Classify query samples with origiNet
@@ -12,7 +12,7 @@
 #' @importFrom glmnet predict.glmnet
 #' @importFrom dplyr mutate
 #' @export
-computeOriginNet <- function(query, id2geneName = NULL, ...) {
+computeOriginNet <- function(query, id2geneName = NULL) {
   # map to gene names if query rownames are Ensembl gene/transcript IDs
   firstRow <- if (!is.null(rownames(query)) && length(rownames(query)) > 0) rownames(query)[1] else ""
   if (grepl("^(ENSG|ENST)", firstRow)) {

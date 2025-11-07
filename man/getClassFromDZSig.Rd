@@ -8,8 +8,6 @@ getClassFromDZSig(score)
 }
 \arguments{
 \item{score}{Numeric vector of DZSig scores}
-
-\item{...}{Other parameters}
 }
 \description{
 DZSig Class from DZSig score

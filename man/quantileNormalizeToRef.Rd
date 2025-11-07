@@ -4,16 +4,16 @@
 \alias{quantileNormalizeToRef}
 \title{single-sample quantile normalization}
 \usage{
-quantileNormalizeToRef(target, ref)
+quantileNormalizeToRef(query, ref)
 }
 \arguments{
-\item{query}{Matrix of input samples (values must be in TPM, one row per transcript/gene id)
-transcript/gene id). If not specified, will default to Robust reference dataset.}
+\item{query}{Matrix of input samples (values must be in TPM, one row per transcript/gene id)}
 
-\item{...}{Other parameters for computeOriginNet
+\item{ref}{Numeric vector of reference distribution (one value per gene)
+transcript/gene id). If not specified, will default to Robust reference dataset.
 \dontrun{
-# quantile normalize target counts/TPMs to reference distribution counts/TPMs
-normalized_tpm <- quantileNormalizeToRef(target, ref)
+# quantile normalize query counts/TPMs to reference distribution counts/TPMs
+query.quant <- quantileNormalizeToRef(query, ref)
 }}
 }
 \description{

@@ -8,8 +8,6 @@ getClassFromNanostring(score)
 }
 \arguments{
 \item{score}{Numeric vector of Nanostring scores}
-
-\item{...}{Other parameters}
 }
 \description{
 COO Class from Nanostring score

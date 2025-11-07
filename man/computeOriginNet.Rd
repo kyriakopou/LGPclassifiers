@@ -10,6 +10,8 @@ computeOriginNet(query, id2geneName = NULL, ...)
 \item{query}{Matrix of input samples (values must be in TPM, one row per transcript/gene id)
 transcript/gene id). If not specified, will default to Robust reference dataset.}
 
+\item{id2geneName}{data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)}
+
 \item{...}{Other parameters for computeOriginNet}
 }
 \description{

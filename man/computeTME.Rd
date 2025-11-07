@@ -13,8 +13,6 @@ transcript/gene id). If not specified, will default to Robust reference dataset.
 \item{id2geneName}{data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)}
 
 \item{...}{Other parameters for scaleTPM}
-
-\item{featureType}{either "gene_id" or "transcript_id" or "gene.name" (no collapse function is executed) (default "gene_id")}
 }
 \description{
 Classify matrix of RNAseq sample counts by TME26

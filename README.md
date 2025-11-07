@@ -56,5 +56,5 @@ reddy <- computeCOO(query = query.tpm, useReference = F)
 ss.reddy <- computeCOO(query = query.tpm, useReference = T)
 
 # Run single-sample originNet classifier on reference-normalized samples
-originNet = computeOriginNet(query = query.tpm)
+ss.rcoo = computeOriginNet(query = query.tpm)
 ```
