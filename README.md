@@ -28,8 +28,7 @@ as follows:
 library(LGPclassifiers)
 
 # Read query TPM matrix (colSums ~ 10^6) - Numeric matrix should have
-# rownames and colnames
-# All three input formats ENSGs, ENSTs & Hugo names are acceptable
+# rownames and colnames. All three input formats ENSGs, ENSTs & Hugo names are acceptable
 query.tpm <- readRDS("ensembl91-genes.salmon-tpm file from NGS360")
 
 # Run SOTA Reddy COO classifier

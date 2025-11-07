@@ -622,15 +622,14 @@ classifiers as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(LGPclassifiers)</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co"># Read query TPM matrix (colSums ~ 10^6) - Numeric matrix should have</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># rownames and colnames</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co"># All three input formats ENSGs, ENSTs &amp; Hugo names are acceptable</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>query.tpm <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;ensembl91-genes.salmon-tpm file from NGS360&quot;</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co"># Run SOTA Reddy COO classifier</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>reddy <span class="ot">&lt;-</span> <span class="fu">computeCOO</span>(<span class="at">query =</span> query.tpm, <span class="at">useReference =</span> F)</span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co"># Run single-sample originNet classifier on reference-normalized samples</span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>ss.rcoo <span class="ot">=</span> <span class="fu">computeOriginNet</span>(<span class="at">query =</span> query.tpm)</span></code></pre></div>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># rownames and colnames. All three input formats ENSGs, ENSTs &amp; Hugo names are acceptable</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>query.tpm <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;ensembl91-genes.salmon-tpm file from NGS360&quot;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co"># Run SOTA Reddy COO classifier</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>reddy <span class="ot">&lt;-</span> <span class="fu">computeCOO</span>(<span class="at">query =</span> query.tpm, <span class="at">useReference =</span> F)</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co"># Run single-sample originNet classifier on reference-normalized samples</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>ss.rcoo <span class="ot">=</span> <span class="fu">computeOriginNet</span>(<span class="at">query =</span> query.tpm)</span></code></pre></div>
 
 </body>
 </html>
