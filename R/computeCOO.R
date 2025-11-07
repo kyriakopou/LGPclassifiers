@@ -18,7 +18,7 @@ computeCOO <- function(query, useReference = TRUE, reference = NULL,
                        id2geneName = NULL, ...) {
   # map to gene names if query rownames are Ensembl gene/transcript IDs
   firstRow <- if (!is.null(rownames(query)) && length(rownames(query)) > 0) rownames(query)[1] else ""
-  if (grepl("^(ENSG|ENST)", firstRow)) {
+  if (grepl("^(ERCC|ENSG|ENST)", firstRow)) {
     # Message about using internal gene name map if not provided as arg
     if (is.null(id2geneName)) {
       id2geneName <- LGPclassifiers::geneName.map

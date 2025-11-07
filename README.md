@@ -16,7 +16,7 @@ originNet refined Cell of Origin (rCOO) classifiers.
 You can install the latest released version of LGPclassifiers like so:
 
 ``` r
-remotes::install_github("kyriakopou/LGPclassifiers")
+remotes::install_github("kyriakopou/originNet")
 ```
 
 ## Example
@@ -27,7 +27,8 @@ as follows:
 ``` r
 library(LGPclassifiers)
 
-# Read query TPM matrix (colSums ~ 10^6)
+# Read query TPM matrix (colSums ~ 10^6) - Numeric matrix should have
+# rownames and colnames
 # All three input formats ENSGs, ENSTs & Hugo names are acceptable
 query.tpm <- readRDS("ensembl91-genes.salmon-tpm file from NGS360")
 

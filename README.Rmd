@@ -36,7 +36,8 @@ Run cohort-based Reddy COO or single-sample originNet rCOO classifiers as follow
 ```{r example, eval=FALSE}
 library(LGPclassifiers)
 
-# Read query TPM matrix (colSums ~ 10^6)
+# Read query TPM matrix (colSums ~ 10^6) - Numeric matrix should have
+# rownames and colnames
 # All three input formats ENSGs, ENSTs & Hugo names are acceptable
 query.tpm <- readRDS("ensembl91-genes.salmon-tpm file from NGS360")
 
