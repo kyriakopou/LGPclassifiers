@@ -6,7 +6,7 @@
 getClassFromDZSig <- function(score) {
 
   class <- cut(score, c(-Inf, -15, 5, Inf),
-    labels = c("DZSig-", NA, "DZSig+"))
+    labels = c("DZSig-", "DZSig-ind", "DZSig+"))
 
   return(class)
 
