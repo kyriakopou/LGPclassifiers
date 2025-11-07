@@ -26,7 +26,7 @@ For the moment it includes [Reddy Cell of Origin (COO)](https://www.ncbi.nlm.nih
 You can install the latest released version of LGPclassifiers like so:
 
 ```{r, eval = FALSE}
-remotes::install_github("kyriakopou/originNet")
+remotes::install_github("kyriakopou/LGPclassifiers")
 ```
 
 ## Example

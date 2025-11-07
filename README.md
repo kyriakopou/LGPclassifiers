@@ -16,7 +16,7 @@ originNet refined Cell of Origin (rCOO) classifiers.
 You can install the latest released version of LGPclassifiers like so:
 
 ``` r
-remotes::install_github("kyriakopou/originNet")
+remotes::install_github("kyriakopou/LGPclassifiers")
 ```
 
 ## Example
