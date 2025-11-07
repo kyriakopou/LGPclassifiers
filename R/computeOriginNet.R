@@ -31,7 +31,18 @@ computeOriginNet <- function(query, id2geneName = NULL) {
   }
 
   # TPM ss quantile normalization wrt ROBUST mean sample (SS normalisation)
+  if (any(!LGPclassifiers::lgp.com.genes %in% rownames(query))) {
+    # find missing genes
+    missing_genes <- LGPclassifiers::lgp.com.genes[!LGPclassifiers::lgp.com.genes %in% rownames(query)]
+    warning(paste("The following genes are missing from the input and will be filled with zeros:", paste(missing_genes, collapse = ", ")))
+    # create a matrix with missing genes filled with zeros
+    missing_matrix <- matrix(0, nrow = length(missing_genes), ncol = ncol(query),
+      dimnames = list(missing_genes, colnames(query)))
+    # combine the original query with the missing genes matrix
+    query <- rbind(query, missing_matrix)
+  }
   query.tr <- query[LGPclassifiers::lgp.com.genes, , drop = FALSE]
+
   ref.mean <- LGPclassifiers::robust.mean.tpm.new[LGPclassifiers::lgp.com.genes]
   query.quant <- log(quantileNormalizeToRef(query.tr, ref.mean) + 1)
 
