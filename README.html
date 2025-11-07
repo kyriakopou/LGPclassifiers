@@ -608,45 +608,28 @@ padding-top: 0px;
 
 <!-- badges: end -->
 
-<p>This package contains all the in-house implemented classifiers for
+<p>This package aims to include all in-house implemented classifiers for
 the LGP project. For the moment it includes <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5659841/">Reddy Cell
 of Origin (COO)</a> and originNet refined Cell of Origin (rCOO)
 classifiers.</p>
 <h2 id="installation">Installation</h2>
 <p>You can install the latest released version of LGPclassifiers like
 so:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>my_repos <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>  <span class="st">&quot;CRAN&quot;</span> <span class="ot">=</span> <span class="st">&quot;https://cran.rstudio.com/&quot;</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>  <span class="st">&quot;BMS RSPM&quot;</span> <span class="ot">=</span> <span class="st">&quot;https://pm.rdcloud.bms.com/bms-cg-biogit-bran/latest&quot;</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>)</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">options</span>(<span class="at">repos =</span> my_repos)</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;LGPclassifiers&quot;</span>)</span></code></pre></div>
-<p>You can install the dev version:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_git</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="st">&quot;git@github.com:bms-ips/KSR-LGPclassifiers.git&quot;</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">ref =</span> <span class="st">&quot;dev&quot;</span>,            <span class="co"># pin to HEAD dev</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="at">git =</span> <span class="st">&quot;external&quot;</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="at">force =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="at">upgrade =</span> <span class="st">&quot;always&quot;</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="at">build_vignettes =</span> <span class="cn">FALSE</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;kyriakopou/originNet&quot;</span>)</span></code></pre></div>
 <h2 id="example">Example</h2>
 <p>Run cohort-based Reddy COO or single-sample originNet rCOO
 classifiers as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(LGPclassifiers)</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co"># Read query TPM matrix (colSums ~ 10^6)</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># All three input formats ENSGs, ENSTs &amp; Hugo names are acceptable</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>query.tpm <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;ensembl91-genes.salmon-tpm file from NGS360&quot;</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co"># Run original implementation of Reddy COO classifier</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>reddy <span class="ot">&lt;-</span> <span class="fu">computeCOO</span>(<span class="at">query =</span> query.tpm, <span class="at">useReference =</span> F)</span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co"># Run single-sample Reddy COO classifier on reference-normalized samples (OBSOLETE)</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>ss.reddy <span class="ot">&lt;-</span> <span class="fu">computeCOO</span>(<span class="at">query =</span> query.tpm, <span class="at">useReference =</span> T)</span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co"># Run single-sample originNet classifier on reference-normalized samples</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>ss.rcoo <span class="ot">=</span> <span class="fu">computeOriginNet</span>(<span class="at">query =</span> query.tpm)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(LGPclassifiers)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co"># Read query TPM matrix (colSums ~ 10^6)</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># All three input formats ENSGs, ENSTs &amp; Hugo names are acceptable</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>query.tpm <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;ensembl91-genes.salmon-tpm file from NGS360&quot;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co"># Run SOTA Reddy COO classifier</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>reddy <span class="ot">&lt;-</span> <span class="fu">computeCOO</span>(<span class="at">query =</span> query.tpm, <span class="at">useReference =</span> F)</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co"># Run single-sample originNet classifier on reference-normalized samples</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>ss.rcoo <span class="ot">=</span> <span class="fu">computeOriginNet</span>(<span class="at">query =</span> query.tpm)</span></code></pre></div>
 
 </body>
 </html>
