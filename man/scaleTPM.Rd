@@ -16,7 +16,9 @@ scaleTPM(
 
 \item{houseKeeping}{vector of housekeeping genes to normalize to (ISY1, R3HDM1, TRIM56, UBXN4, WDR55)}
 
-\item{ref.mean, ref.sd}{reference gene means or standard deviations}
+\item{ref.mean}{reference gene means}
+
+\item{ref.sd}{reference gene standard deviations}
 }
 \description{
 Normalize tpm sample counts based on housekeeping genes and self-scale or external ref scale

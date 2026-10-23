@@ -7,8 +7,7 @@
 computeOriginNet(query, id2geneName = NULL)
 }
 \arguments{
-\item{query}{Matrix of input samples (values must be in TPM, one row per transcript/gene id)
-transcript/gene id). If not specified, will default to Robust reference dataset.}
+\item{query}{Matrix of input samples (values must be in TPM, one row per transcript/gene id)}
 
 \item{id2geneName}{data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)}
 }
@@ -18,6 +17,6 @@ Novel single-sample COO+DZ classification using internally designed originNet mo
 \examples{
 \dontrun{
 # Classify query samples with origiNet
-subType <- computeOriginNet(query = queryMatrix)
+rrCOO <- computeOriginNet(query = tpm.matrix)
 }
 }

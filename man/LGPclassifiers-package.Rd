@@ -8,15 +8,24 @@
 \description{
 This package contains several methods to classify patients in the LGP cohort based on various molecular features.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/kyriakopou/LGPclassifiers}
+  \item Report bugs at \url{https://github.com/kyriakopou/LGPclassifiers/issues}
+}
+
+}
 \author{
-\strong{Maintainer}: Clara Amorosi \email{Clara.Amorosi@bms.com} (\href{https://orcid.org/0000-0002-0730-2576}{ORCID})
+\strong{Maintainer}: Charalampos Kyriakopoulos \email{Charalampos.Kyriakopoulos@bms.com} (\href{https://orcid.org/0000-0003-1886-8847}{ORCID})
 
 Authors:
 \itemize{
-  \item Mandeep Takhar \email{Mandeep.Takhar@bms.com} (\href{https://orcid.org/0009-0002-6513-5080}{ORCID})
-  \item Manuel Ugidos Guerrero \email{Manuel.UgidosGuerrero@bms.com}
-  \item Matt Stokes \email{Matt.Stokes@bms.com}
-  \item Charalampos Kyriakopoulos \email{Charalampos.Kyriakopoulos@bms.com}
+  \item Charalampos Kyriakopoulos \email{Charalampos.Kyriakopoulos@bms.com} (\href{https://orcid.org/0000-0003-1886-8847}{ORCID})
+  \item Clara Amorosi (\href{https://orcid.org/0000-0002-0730-2576}{ORCID})
+  \item Mandeep Takhar (\href{https://orcid.org/0009-0002-6513-5080}{ORCID})
+  \item Manuel Ugidos Guerrero (\href{https://orcid.org/0000-0001-5710-938X}{ORCID})
+  \item Matt Stokes
 }
 
 }

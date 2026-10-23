@@ -3,7 +3,8 @@
 \docType{data}
 \name{robust.sd.tpm}
 \alias{robust.sd.tpm}
-\title{ROBUST reference distribution standard deviations}
+\title{ROBUST reference distribution standard deviations (used in Reddy and ssREF)
+The standard deviations of the ROBUST reference RNAseq dataset (old TPMs after HK norm)}
 \format{
 A named vector of 56478 reference gene sds (after tpm scaling)
 }
@@ -11,6 +12,7 @@ A named vector of 56478 reference gene sds (after tpm scaling)
 robust.sd.tpm
 }
 \description{
-The standard deviations of the ROBUST reference RNAseq dataset
+ROBUST reference distribution standard deviations (used in Reddy and ssREF)
+The standard deviations of the ROBUST reference RNAseq dataset (old TPMs after HK norm)
 }
 \keyword{datasets}

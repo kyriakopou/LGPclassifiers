@@ -2,17 +2,20 @@
 #' @description
 #' Novel single-sample COO+DZ classification using internally designed originNet model
 #' @param query Matrix of input samples (values must be in TPM, one row per transcript/gene id)
-#' transcript/gene id). If not specified, will default to Robust reference dataset.
 #' @param id2geneName data frame mapping Ensembl gene ids/transcript ids to gene names (provided as internal package data)
 #' @examples
 #' \dontrun{
 #' # Classify query samples with origiNet
-#' subType <- computeOriginNet(query = queryMatrix)
+#' rrCOO <- computeOriginNet(query = tpm.matrix)
 #' }
-#' @importFrom glmnet predict.glmnet
+#' @import glmnet
+#' @importFrom stats predict
 #' @importFrom dplyr mutate
 #' @export
 computeOriginNet <- function(query, id2geneName = NULL) {
+
+  checkTPMinput(query)
+
   # map to gene names if query rownames are Ensembl gene/transcript IDs
   firstRow <- if (!is.null(rownames(query)) && length(rownames(query)) > 0) rownames(query)[1] else ""
   if (grepl("^(ERCC|ENSG|ENST)", firstRow)) {
@@ -57,14 +60,15 @@ computeOriginNet <- function(query, id2geneName = NULL) {
   pred.dz <- predict(dz.model, newx = X)[, 1]
 
   df <- data.frame(ID = rownames(X), originNet_score = pred.coo, originNet = getClassFromNanostring(pred.coo),
-    DZSig_score = pred.dz, DZSig = getClassFromDZSig(pred.dz)) %>%
-    mutate(originNet_dz = ordered(ifelse(originNet %in% c("ABC", "Unclassified"), as.character(originNet),
-      ifelse(DZSig == "DZSig+", "DZSig+", "GCB")), levels = c("GCB", "DZSig+", "Unclassified", "ABC")))
+    DZSig_score = pred.dz, DZSig = getClassFromDLBCL90_DZ(pred.dz)) %>%
+    mutate(originNet_dz = ordered(ifelse(.data$originNet %in% c("ABC"), as.character(.data$originNet),
+      ifelse(.data$DZSig == "DZSig+", "DZSig+", as.character(.data$originNet))), levels = c("GCB", "DZSig+", "Unclassified", "ABC")))
 
   # estimate and integrate originNet confidence in the output
-  # df_conf <- getOriginNetConfidence(query.quant, df)
-  # df <- df %>%
-  #   left_join(df_conf)
+  df_conf <- getOriginNetConfidence(query.quant, df)
+  df <- df %>%
+    left_join(df_conf %>%
+      select(-matches("T2|dist|scaled")))
 
   return(df)
 

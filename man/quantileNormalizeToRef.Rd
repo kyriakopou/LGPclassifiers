@@ -4,18 +4,19 @@
 \alias{quantileNormalizeToRef}
 \title{single-sample quantile normalization}
 \usage{
-quantileNormalizeToRef(query, ref)
+quantileNormalizeToRef(query, ref.sample)
 }
 \arguments{
 \item{query}{Matrix of input samples (values must be in TPM, one row per transcript/gene id)}
 
-\item{ref}{Numeric vector of reference distribution (one value per gene)
-transcript/gene id). If not specified, will default to Robust reference dataset.
-\dontrun{
-# quantile normalize query counts/TPMs to reference distribution counts/TPMs
-query.quant <- quantileNormalizeToRef(query, ref)
-}}
+\item{ref.sample}{Numeric vector of reference distribution (one value per gene)}
 }
 \description{
 single-sample quantile normalization to reference distribution
+}
+\examples{
+\dontrun{
+# quantile normalize query counts/TPMs to reference distribution counts/TPMs
+query.quant <- quantileNormalizeToRef(query, ref.sample)
+}
 }

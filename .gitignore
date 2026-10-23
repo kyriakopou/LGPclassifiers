@@ -2,3 +2,5 @@
 test.R
 *.rds
 docs
+README.html
+^domino\.Rhistory$

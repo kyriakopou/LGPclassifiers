@@ -3,7 +3,8 @@
 \docType{data}
 \name{robust.mean.tpm}
 \alias{robust.mean.tpm}
-\title{ROBUST reference distribution means}
+\title{ROBUST reference distribution means (used in Reddy and ssREF)
+The means of the ROBUST reference RNAseq dataset (old TPMs after HK norm)}
 \format{
 A named vector of 56478 reference gene means (after tpm scaling)
 }
@@ -11,6 +12,7 @@ A named vector of 56478 reference gene means (after tpm scaling)
 robust.mean.tpm
 }
 \description{
-The means of the ROBUST reference RNAseq dataset
+ROBUST reference distribution means (used in Reddy and ssREF)
+The means of the ROBUST reference RNAseq dataset (old TPMs after HK norm)
 }
 \keyword{datasets}

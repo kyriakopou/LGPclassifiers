@@ -16,6 +16,9 @@
 #' @export
 computeCOO <- function(query, useReference = TRUE, reference = NULL,
                        id2geneName = NULL, ...) {
+
+  checkTPMinput(query)
+
   # map to gene names if query rownames are Ensembl gene/transcript IDs
   firstRow <- if (!is.null(rownames(query)) && length(rownames(query)) > 0) rownames(query)[1] else ""
   if (grepl("^(ERCC|ENSG|ENST)", firstRow)) {
@@ -28,31 +31,34 @@ computeCOO <- function(query, useReference = TRUE, reference = NULL,
     query <- collapseToGenes(query, id2geneName)
   }
 
-  # Use reference-based single sample classifier
+  # Use reference-based approach
   if (useReference) {
     if (is.null(reference)) {
       message("Scaling TPM using ROBUST as reference since no other reference was provided.")
-      query.ss <- scaleTPM(query,
+      query <- scaleTPM(query,
         ref.mean = LGPclassifiers::robust.mean.tpm, ref.sd = LGPclassifiers::robust.sd.tpm,
         ...
       )
     } else {
       # Normalize and use user-provided reference dataset
       message("Scaling TPM using user-provided reference dataset.")
-      reference.ss <- scaleTPM(reference,
+      reference <- scaleTPM(reference,
         ...
       )
-      ref.mean <- apply(reference.ss, 1, mean)
-      ref.sd <- apply(reference.ss, 1, sd)
-      query.ss <- scaleTPM(query,
+      ref.mean <- apply(reference, 1, mean)
+      ref.sd <- apply(reference, 1, sd)
+      # scale query wrt reference
+      query <- scaleTPM(query,
         ref.mean = ref.mean, ref.sd = ref.sd,
         ...
       )
     }
-  } else { # Original Reddy implementation
-    query.ss <- scaleTPM(query,
+    # Original cohort-based Reddy implementation
+  } else {
+    query <- scaleTPM(query,
       ...
     )
   }
-  return(runReddyCOO(query.ss))
+
+  return(runReddyCOO(query))
 }

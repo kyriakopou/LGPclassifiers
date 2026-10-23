@@ -18,12 +18,12 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-This package aims to include all in-house implemented classifiers for the LGP project.
+This package contains all the in-house implemented classifiers for the LGP project.
 For the moment it includes [Reddy Cell of Origin (COO)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5659841/) and originNet refined Cell of Origin (rCOO) classifiers.
 
 ## Installation
 
-You can install the latest released version of LGPclassifiers like so:
+You can install the latest released version of LGPclassifiers as follows:
 
 ```{r, eval = FALSE}
 remotes::install_github("kyriakopou/LGPclassifiers")
@@ -36,11 +36,11 @@ Run cohort-based Reddy COO or single-sample originNet rCOO classifiers as follow
 ```{r example, eval=FALSE}
 library(LGPclassifiers)
 
-# Read query TPM matrix (colSums ~ 10^6) - Numeric matrix should have
-# rownames and colnames. All three input formats ENSGs, ENSTs & Hugo names are acceptable
+# Read query TPM matrix (colSums ~ 10^6)
+# All three input formats ENSGs, ENSTs & Hugo names are acceptable
 query.tpm <- readRDS("ensembl91-genes.salmon-tpm file from NGS360")
 
-# Run SOTA Reddy COO classifier
+# Run original implementation of Reddy COO classifier
 reddy <- computeCOO(query = query.tpm, useReference = F)
 
 # Run single-sample originNet classifier on reference-normalized samples

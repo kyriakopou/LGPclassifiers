@@ -3,11 +3,10 @@
 #' DZSig Class from DZSig score
 #' @param score Numeric vector of DZSig scores
 #' @export
-getClassFromDZSig <- function(score) {
 
+getClassFromDZSig <- function(score) {
   class <- cut(score, c(-Inf, -15, 5, Inf),
     labels = c("DZSig-", "DZSig-ind", "DZSig+"))
 
   return(class)
-
 }

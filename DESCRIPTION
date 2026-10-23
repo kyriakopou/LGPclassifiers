@@ -1,46 +1,46 @@
 Package: LGPclassifiers
 Title: Classifiers for the LGP Cohort
-Version: 0.1.0.9000
+Version: 2.0.0
 Authors@R: 
   c(person(given = "Clara",
            family = "Amorosi",
-           role = c("aut", "cre"),
-           email = "Clara.Amorosi@bms.com",
+           role = c("aut"),
            comment = c(ORCID = "0000-0002-0730-2576")
     ),
     person(given = "Mandeep",
            family = "Takhar",
            role = c("aut"),
-           email = "Mandeep.Takhar@bms.com",
            comment = c(ORCID = "0009-0002-6513-5080")
     ),
     person(given = "Manuel",
            family = "Ugidos Guerrero",
            role = c("aut"),
-           email = "Manuel.UgidosGuerrero@bms.com"
+           comment = c(ORCID = "0000-0001-5710-938X")
     ),
     person(given = "Matt",
            family = "Stokes",
-           role = c("aut"),
-           email = "Matt.Stokes@bms.com"
+           role = c("aut")
     ),
     person(given = "Charalampos",
            family = "Kyriakopoulos",
-           role = c("aut"),
-           email = "Charalampos.Kyriakopoulos@bms.com"
+           role = c("aut", "cre"),
+           email = "Charalampos.Kyriakopoulos@bms.com",
+           comment = c(ORCID = "0000-0003-1886-8847")
     )
   )
 Description: This package contains several methods to classify patients in the LGP cohort based on various molecular features. 
+URL: https://github.com/kyriakopou/LGPclassifiers
+BugReports: https://github.com/kyriakopou/LGPclassifiers/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 Depends: 
     R (>= 3.5)
 Imports: 
     dplyr,
-    glmnet,
     magrittr,
+    Matrix,
     stats,
-    tibble
+    glmnet
 LazyData: true
+Config/roxygen2/version: 8.0.0

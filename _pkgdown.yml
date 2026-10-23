@@ -1,6 +1,10 @@
-url: https://biogit.pri.bms.com/pages/KSR/LGPclassifiers/
 template:
   bootstrap: 5
+llm-docs: false
+
+navbar:
+  structure:
+    right: [search, github]
 
 reference:
 - title: Functions
@@ -9,10 +13,25 @@ reference:
   - collapseToGenes
   - scaleTPM
   - runReddyCOO
-  - tmeClassifier
+  - computeOriginNet
+  - getClassFromDZSig
+  - getClassFromNanostring
+  - quantileNormalizeToRef
+  - checkTPMinput
+  - computeDHit
+  - runDHitSig
+  - getClassFromDLBCL90_DZ
+  - getOriginNetConfidence
 - title: Reference datasets
   contents:
   - geneName.map
   - robust.mean.tpm
   - robust.sd.tpm
-  - modelM3.coefficients
+  - lgp.com.genes
+  - originNet.coo.model
+  - originNet.dzsig.model
+  - robust.mean.tpm.new
+  - dhit.model
+  - dhit_parameters
+  - probConfIntData
+  - probConfIntData.dz

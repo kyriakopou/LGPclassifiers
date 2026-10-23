@@ -14,7 +14,8 @@ runReddyCOO <- function(exprs) {
   abc_score <- apply(subset(dataR_scaled, rownames(dataR_scaled) %in% as.character(subset(coo_genes, coo_genes$SubType == "ABC")$GeneName)), 2, mean)
   gcb_score <- apply(subset(dataR_scaled, rownames(dataR_scaled) %in% as.character(subset(coo_genes, coo_genes$SubType == "GCB")$GeneName)), 2, mean)
 
-  final_subtype <- data.frame("ssREFERENCE_score" = (abc_score - gcb_score), "ssREFERENCE" = ifelse((abc_score - gcb_score) > 0.25, "ABC", ifelse((abc_score - gcb_score) < -0.25, "GCB", "Unclassified")))
+  final_subtype <- data.frame("reddy_score" = (abc_score - gcb_score), "reddy" = ifelse((abc_score - gcb_score) > 0.25, "ABC", ifelse((abc_score - gcb_score) < -0.25, "GCB", "Unclassified")))
+  final_subtype$reddy <- ordered(final_subtype$reddy, levels = c("GCB", "Unclassified", "ABC"))
   final_subtype$ID <- rownames(final_subtype)
 
   return(final_subtype)

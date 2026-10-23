@@ -2,18 +2,18 @@
 #' @description
 #' single-sample quantile normalization to reference distribution
 #' @param query Matrix of input samples (values must be in TPM, one row per transcript/gene id)
-#' @param ref Numeric vector of reference distribution (one value per gene)
-#' transcript/gene id). If not specified, will default to Robust reference dataset.
+#' @param ref.sample Numeric vector of reference distribution (one value per gene)
+#' @examples
 #' \dontrun{
 #' # quantile normalize query counts/TPMs to reference distribution counts/TPMs
-#' query.quant <- quantileNormalizeToRef(query, ref)
+#' query.quant <- quantileNormalizeToRef(query, ref.sample)
 #' }
 #' @export
-quantileNormalizeToRef <- function(query, ref) {
+quantileNormalizeToRef <- function(query, ref.sample) {
 
-  genes <- base::intersect(rownames(query), names(ref))
+  genes <- base::intersect(rownames(query), names(ref.sample))
   query <- query[genes, ]
-  ref <- ref[genes]
+  ref <- ref.sample[genes]
   # Rank the query counts
   ranked <- apply(query, 2, rank, ties.method = "min")
   # Sort the reference distribution
